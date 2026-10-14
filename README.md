@@ -20,6 +20,12 @@ A one-page-app prototype website for car detailing and automotive studios.
 2. Under **Build and deployment**, choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
 3. After a minute the site is live at `https://<your-username>.github.io/Your-Brand/`.
 
+## Deploy on Railway
+The included `Dockerfile` serves the site with Caddy on Railway's `PORT`.
+1. New Project → Deploy from GitHub repo → **Your-Brand**.
+2. Service → **Settings → Networking → Generate Domain**.
+3. Every push to `main` redeploys automatically.
+
 ## Rebrand for a client
 Edit `DEFAULT_BRAND` near the top of the `<script>` in `index.html` (name, tagline, phone, WhatsApp, email, city, accent colour), or use the **Customize demo** button on the live site.
 
