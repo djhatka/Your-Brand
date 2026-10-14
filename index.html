@@ -1,0 +1,1432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Luxury car detailing studio website prototype: ceramic coating, PPF, paint correction, interior detailing and more.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Auto Detailing Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a dark detailing-studio world — hexagon ceiling lights, paint-gloss highlights, one champagne accent. Long scrolling home, hash-routed inner pages. */
+:root{
+  --ink:#0C1216; --panel:#131B21; --panel2:#19232B; --line:#26323C;
+  --fg:#E8EDF0; --mute:#97A5AF; --accent:#D4A537; --accent-ink:#1A1206; --cool:#7DB6D8; --wa:#25D366; --gold-hi:#F6DC8E;
+  --gold-grad:linear-gradient(115deg,color-mix(in srgb,var(--accent) 62%,#000) 0%,color-mix(in srgb,var(--accent) 42%,#fff) 22%,var(--accent) 42%,color-mix(in srgb,var(--accent) 72%,#000) 58%,color-mix(in srgb,var(--accent) 30%,#fff) 78%,var(--accent) 100%);
+  --display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r:14px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.15;margin:0;text-wrap:balance}
+h2{font-size:clamp(1.6rem,3.4vw,2.6rem)}
+h3{font-size:1.15rem}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.lede{color:var(--mute);max-width:62ch;font-size:1.06rem}
+section{padding-block:clamp(56px,8vw,104px)}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;margin-bottom:36px}
+.sec-head > div{display:grid;gap:12px;min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);font-weight:600;cursor:pointer;transition:transform .2s,background .2s,border-color .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.wa{background:var(--wa);color:#05210f;border-color:var(--wa)}
+.btn.ghost{background:transparent}
+.btn svg{width:18px;height:18px;flex:none}
+.mono{font-family:var(--mono)}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--ink) 86%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;height:72px}
+.nav ul{list-style:none;display:flex;gap:4px;margin:0;padding:0}
+.nav ul.right{justify-content:flex-end;align-items:center}
+.nav ul a{padding:8px 12px;border-radius:999px;color:var(--mute);font-weight:500;font-size:.95rem;transition:color .2s,background .2s}
+.nav ul a:hover,.nav ul a.on{color:var(--fg);background:var(--panel2)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:.02em}
+.logo svg{width:34px;height:34px}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:44px;cursor:pointer;justify-self:end}
+.burger span{display:block;width:18px;height:2px;background:var(--fg);margin:4px auto;transition:transform .25s}
+.drawer{display:none}
+@media (max-width:920px){
+  .nav{grid-template-columns:1fr auto}
+  .nav ul{display:none}
+  .burger{display:block}
+  .drawer{display:block;max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .drawer.open{max-height:520px}
+  .drawer nav{display:grid;gap:4px;padding:8px 20px 20px}
+  .drawer a{padding:12px 4px;border-bottom:1px solid var(--line);font-weight:500}
+}
+
+/* brand intro */
+.intro{text-align:center;padding-block:64px 24px;display:grid;justify-items:center;gap:18px}
+.intro .mark{width:110px;height:110px;filter:drop-shadow(0 10px 40px color-mix(in srgb,var(--accent) 35%,transparent))}
+.intro h1{font-size:clamp(2.4rem,7vw,5.2rem);font-weight:800;letter-spacing:-.01em}
+.intro h1 span{color:var(--accent)}
+.intro p{color:var(--mute);max-width:56ch;font-size:1.1rem}
+.intro .tag{font-family:var(--mono);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cool)}
+
+/* welcome / hero */
+.welcome{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(24px,5vw,64px);align-items:center;padding-block:40px 80px}
+.welcome .copy{display:grid;gap:20px}
+.welcome h2{font-size:clamp(1.7rem,3.6vw,2.8rem)}
+.stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:6px}
+.stats div{display:grid}
+.stats b{font-family:var(--display);font-size:1.7rem;font-variant-numeric:tabular-nums}
+.stats span{color:var(--mute);font-size:.86rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.slides{position:relative;aspect-ratio:16/11;max-width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.slides .sl{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.slides .sl.on{opacity:1}
+.slides .sl svg{width:100%;height:100%;display:block}
+.slides .sl.on svg{animation:kb 7s ease-out both}
+@keyframes kb{from{transform:scale(1.12) translateX(2%)}to{transform:scale(1) translateX(0)}}
+.slides .cap{position:absolute;left:16px;bottom:16px;right:16px;display:flex;justify-content:space-between;align-items:end;gap:12px;z-index:2}
+.slides .cap b{font-family:var(--display);font-size:1rem;background:rgba(8,12,15,.7);padding:8px 14px;border-radius:10px}
+.dots{display:flex;gap:6px}
+.dots button{width:26px;height:4px;border-radius:4px;border:0;background:rgba(255,255,255,.3);cursor:pointer;padding:0}
+.dots button.on{background:var(--accent)}
+@media (max-width:860px){.welcome{grid-template-columns:1fr}}
+
+/* service cards */
+.grid-svc{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:22px}
+.svc{--mx:50%;--my:50%;--rx:0deg;--ry:0deg;position:relative;display:flex;flex-direction:column;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);overflow:hidden;transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease,border-color .25s,box-shadow .3s}
+.svc-media{aspect-ratio:16/10;overflow:hidden;position:relative}
+.svc-media svg,.svc-media img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.svc-body{padding:20px 20px 22px;display:grid;gap:10px;flex:1;align-content:start}
+.svc-body p{color:var(--mute);font-size:.95rem}
+.svc .more{margin-top:4px;font-weight:600;color:var(--accent);display:inline-flex;gap:6px;align-items:center}
+.svc .more i{font-style:normal;transition:transform .25s}
+.svc::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(255,255,255,.09),transparent 45%);opacity:0;transition:opacity .3s}
+@media (hover:hover){
+  .svc:hover{border-color:color-mix(in srgb,var(--accent) 60%,var(--line));box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 0 1px color-mix(in srgb,var(--accent) 25%,transparent);transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-8px)}
+  .svc:hover .svc-media svg,.svc:hover .svc-media img{transform:scale(1.08)}
+  .svc:hover::after{opacity:1}
+  .svc:hover .more i{transform:translateX(6px)}
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;color:var(--mute);font-weight:500}
+.chip.on{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.photo-tag{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;background:rgba(8,12,15,.72);color:#cfd8de;padding:4px 8px;border-radius:6px;z-index:2}
+
+/* band */
+.band{background:linear-gradient(110deg,var(--panel2),var(--panel));border-block:1px solid var(--line);padding-block:42px}
+.band .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.band h3{font-size:clamp(1.15rem,2.4vw,1.6rem);max-width:30ch}
+.band p{color:var(--mute);margin-top:6px}
+
+/* story */
+.story{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center}
+.story .copy{display:grid;gap:18px}
+.story .copy p{color:var(--mute)}
+.story-art{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;position:relative}
+.story-art svg{width:100%;height:100%;display:block}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}
+.fact{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel)}
+.fact b{display:block;font-family:var(--display);font-size:1.4rem;font-variant-numeric:tabular-nums}
+.fact span{color:var(--mute);font-size:.86rem}
+@media (max-width:860px){.story{grid-template-columns:1fr}}
+
+/* videos */
+.vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.vid{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:#06090b;position:relative}
+.vid canvas{display:block;width:100%;aspect-ratio:9/12;max-width:100%}
+.vid .vbar{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(transparent,rgba(5,8,10,.92));display:grid;gap:10px}
+.vid .vbar h4{font-size:.98rem}
+.vid .vbar p{color:#b6c2ca;font-size:.84rem}
+.vid .ctl{display:flex;align-items:center;gap:10px}
+.vid .ctl button{width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.14);cursor:pointer;display:grid;place-items:center;color:#fff}
+.vid .prog{flex:1;height:3px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden}
+.vid .prog i{display:block;height:100%;width:0;background:var(--accent)}
+.vid .ts{font-family:var(--mono);font-size:.72rem;color:#c8d2d8;font-variant-numeric:tabular-nums}
+@media (max-width:900px){.vids{grid-template-columns:1fr;max-width:460px;margin-inline:auto}.vid canvas{aspect-ratio:4/5}}
+
+/* trust */
+.trust{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.materials{display:grid;gap:12px}
+.mat{display:grid;grid-template-columns:92px minmax(0,1fr);gap:16px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.mat .logo-slot{height:56px;border-radius:10px;border:1px dashed #3a4955;display:grid;place-items:center;font-family:var(--mono);font-size:.62rem;color:var(--mute);text-align:center;line-height:1.3}
+.mat h4{font-family:var(--body);font-size:1rem;font-weight:600}
+.mat p{color:var(--mute);font-size:.88rem}
+.mat .spec{font-family:var(--mono);font-size:.74rem;color:var(--cool)}
+.process{display:grid;gap:0;counter-reset:st;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:8px 22px}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step::before{counter-increment:st;content:counter(st,decimal-leading-zero);font-family:var(--mono);color:var(--accent);font-size:.9rem;padding-top:2px}
+.step h4{font-family:var(--body);font-weight:600;font-size:1rem}
+.step p{color:var(--mute);font-size:.9rem}
+.warranty{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.warranty span{border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:.84rem;color:var(--mute)}
+@media (max-width:900px){.trust{grid-template-columns:1fr}}
+
+/* forms */
+.form{display:grid;gap:14px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+label.f{display:grid;gap:6px;font-size:.86rem;color:var(--mute);font-weight:500}
+.f input,.f select,.f textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--ink);color:var(--fg);font-size:1rem}
+.f textarea{min-height:96px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--accent)}
+.f.bad input,.f.bad select{border-color:#e0705f}
+.err{color:#f08b7b;font-size:.82rem;min-height:1em}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:var(--ink);overflow:hidden}
+.stepper button{width:46px;height:46px;border:0;background:var(--panel2);cursor:pointer;font-size:1.2rem}
+.stepper input{border:0!important;text-align:center;background:transparent!important;border-radius:0!important}
+
+/* fleet */
+.fleet{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,64px);align-items:start}
+.fleet .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px)}
+.est{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;border-radius:12px;background:var(--ink);border:1px solid var(--line)}
+.est b{font-family:var(--display);font-size:1.3rem;font-variant-numeric:tabular-nums}
+.tiers{display:grid;gap:10px;margin-top:20px}
+.tier{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:10px;border:1px solid var(--line)}
+.tier b{color:var(--accent);font-family:var(--mono)}
+@media (max-width:900px){.fleet{grid-template-columns:1fr}}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:16px}
+.cbox{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:var(--panel);display:grid;gap:8px;align-content:start}
+.cbox .big{font-family:var(--display);font-size:1.05rem;word-break:break-word}
+.cbox p{color:var(--mute);font-size:.9rem}
+.copy-btn{justify-self:start;background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.8rem;cursor:pointer;color:var(--mute)}
+
+/* reviews */
+.revs{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px}
+.rev{flex:0 0 min(340px,85%);scroll-snap-align:start;border:1px solid var(--line);border-radius:var(--r);padding:22px;background:var(--panel);display:grid;gap:14px;align-content:start}
+.rev .stars{color:var(--accent);letter-spacing:3px}
+.rev p{color:#cdd6dc}
+.rev .who{display:flex;align-items:center;gap:12px}
+.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:600;background:var(--panel2);border:1px solid var(--line);font-size:.85rem;flex:none}
+.who small{display:block;color:var(--mute)}
+.sample-note{font-family:var(--mono);font-size:.7rem;color:var(--mute);letter-spacing:.06em}
+
+/* blog */
+.posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:20px}
+.post{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel);display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+.post:hover{transform:translateY(-4px);border-color:var(--accent)}
+.post .pm{aspect-ratio:16/9;overflow:hidden}
+.post .pm svg{width:100%;height:100%;display:block}
+.post .pb{padding:18px;display:grid;gap:8px}
+.post .pb p{color:var(--mute);font-size:.9rem}
+.post .meta{font-family:var(--mono);font-size:.72rem;color:var(--cool)}
+
+/* page header */
+.phead{padding-block:64px 32px;display:grid;gap:14px}
+.phead h1{font-size:clamp(2rem,5vw,3.6rem);font-weight:800}
+.crumbs{font-family:var(--mono);font-size:.76rem;color:var(--mute)}
+.crumbs a{color:var(--accent)}
+
+/* service detail */
+.sd-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.sd-hero .media{border-radius:20px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/11;position:relative}
+.sd-hero .media svg{width:100%;height:100%;display:block}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.specs div{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel)}
+.specs b{display:block;font-family:var(--display);font-size:1rem}
+.specs span{font-size:.78rem;color:var(--mute)}
+.incl{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:12px}
+.incl div{display:flex;gap:12px;align-items:start;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.incl svg{width:20px;height:20px;flex:none;color:var(--accent);margin-top:2px}
+.pk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.pkg{border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--panel);display:grid;gap:12px;align-content:start}
+.pkg.hot{border-color:var(--accent);background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 10%,var(--panel)),var(--panel))}
+.pkg .price{font-family:var(--display);font-size:1.7rem;font-variant-numeric:tabular-nums}
+.pkg ul{margin:0;padding-left:18px;color:var(--mute);font-size:.9rem;display:grid;gap:4px}
+@media (max-width:900px){.sd-hero,.pk{grid-template-columns:1fr}}
+.ba{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line);max-width:100%;user-select:none}
+.ba .layer{position:absolute;inset:0}
+.ba .layer svg{width:100%;height:100%;display:block}
+.ba .after{clip-path:inset(0 0 0 var(--p,50%))}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--p,50%);width:2px;background:#fff;transform:translateX(-1px);pointer-events:none}
+.ba .handle::after{content:"◂ ▸";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;color:#111;border-radius:999px;padding:6px 10px;font-size:.75rem;white-space:nowrap}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba .lbl{position:absolute;top:14px;font-family:var(--mono);font-size:.72rem;background:rgba(8,12,15,.75);padding:5px 10px;border-radius:6px;letter-spacing:.1em}
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::after{content:"+";color:var(--accent);font-size:1.3rem;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--mute);margin-top:10px;max-width:70ch}
+
+/* branches */
+.branches{display:grid;gap:22px}
+.br{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel);transition:border-color .25s,transform .25s}
+.br:hover{border-color:var(--accent)}
+.br .map{min-height:240px;position:relative}
+.br .map svg{position:absolute;inset:0;width:100%;height:100%}
+.br .bb{padding:clamp(18px,3vw,30px);display:grid;gap:12px;align-content:start}
+.br .bb p{color:var(--mute)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{font-size:.8rem;border:1px solid var(--line);padding:4px 10px;border-radius:999px;color:var(--mute)}
+@media (max-width:760px){.br{grid-template-columns:1fr}}
+
+/* about */
+.values{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:16px}
+.val{border:1px solid var(--line);border-radius:var(--r);padding:22px;background:var(--panel);display:grid;gap:10px}
+.val p{color:var(--mute);font-size:.94rem}
+.timeline{display:grid;gap:0;border-left:2px solid var(--line);margin-left:8px}
+.tl{padding:0 0 28px 26px;position:relative;display:grid;gap:4px}
+.tl::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.tl b{font-family:var(--mono);color:var(--accent)}
+.tl p{color:var(--mute)}
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:16px}
+.mem{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:var(--panel);display:grid;gap:6px;justify-items:start}
+.mem .avatar{width:56px;height:56px;font-size:1rem}
+.mem span{color:var(--mute);font-size:.88rem}
+
+/* article */
+.article{max-width:720px;display:grid;gap:20px;padding-bottom:40px}
+.article .cover{border-radius:18px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/8}
+.article .cover svg{width:100%;height:100%;display:block}
+.article p{color:#cdd6dc;font-size:1.06rem}
+.article h3{margin-top:10px}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding-block:56px 120px;background:#090E12}
+.fgrid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:28px}
+.fgrid h4{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:12px;font-weight:400}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fgrid a:hover{color:var(--accent)}
+.fgrid p{color:var(--mute);font-size:.92rem;max-width:36ch;margin-top:12px}
+@media (max-width:800px){.fgrid{grid-template-columns:1fr 1fr}.fgrid > div:first-child{grid-column:1/-1}}
+
+/* floating */
+.fab-wa,.fab-chat{position:fixed;z-index:50;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;border:0;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.45);transition:transform .2s}
+.fab-wa{right:20px;bottom:calc(92px + env(safe-area-inset-bottom,0px));background:var(--wa);color:#fff}
+.fab-chat{right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--accent);color:var(--accent-ink)}
+.fab-wa:hover,.fab-chat:hover{transform:scale(1.07)}
+.fab-wa svg,.fab-chat svg{width:28px;height:28px}
+.fab-chat .ping{position:absolute;top:4px;right:4px;width:12px;height:12px;border-radius:50%;background:#e8584a;border:2px solid var(--ink)}
+.fab-demo{position:fixed;left:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;border:1px dashed #44535f;background:rgba(12,18,22,.9);color:var(--mute);padding:8px 14px;border-radius:999px;font-family:var(--mono);font-size:.72rem;cursor:pointer}
+.chat{position:fixed;right:20px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:60;width:min(370px,calc(100vw - 32px));height:min(540px,calc(100vh - 140px));background:var(--panel);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);transform-origin:bottom right;animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}
+.chat-h{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.chat-h b{display:block;font-size:.95rem}
+.chat-h small{color:var(--wa)}
+.chat-h button{margin-left:auto;background:none;border:0;cursor:pointer;font-size:1.4rem;color:var(--mute)}
+.chat-b{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:.92rem;line-height:1.5}
+.msg.bot{background:var(--panel2);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.me{background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px;align-self:flex-end}
+.msg a{color:var(--accent);font-weight:600;text-decoration:underline}
+.quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 10px}
+.quick button{font-size:.8rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;color:var(--fg)}
+.chat-f{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.chat-f input{flex:1;min-width:0;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--ink)}
+.chat-f button{border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:0 16px;font-weight:600;cursor:pointer}
+.typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--mute);margin:0 2px;animation:bl 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bl{50%{opacity:.2}}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(4,7,9,.72);backdrop-filter:blur(6px);animation:fade .3s ease}
+@keyframes fade{from{opacity:0}}
+.mbox{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;box-shadow:0 40px 100px rgba(0,0,0,.7);animation:rise .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes rise{from{transform:translateY(30px);opacity:0}}
+.mtop{padding:24px 24px 6px;display:grid;gap:8px}
+.mtop h3{font-size:1.35rem}
+.mtop p{color:var(--mute);font-size:.94rem}
+.mx{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);cursor:pointer;font-size:1.2rem;color:var(--fg)}
+.mbody{padding:16px 24px 20px}
+.mfoot{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.mfoot > div{padding:16px 20px;display:grid;gap:2px}
+.mfoot > div + div{border-left:1px solid var(--line)}
+.mfoot small{color:var(--mute);font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
+.mfoot a{font-weight:600;word-break:break-all}
+.sent{display:grid;gap:14px;text-align:center;justify-items:center;padding:10px 0}
+.sent .tick{width:58px;height:58px;border-radius:50%;background:color-mix(in srgb,var(--accent) 18%,transparent);display:grid;place-items:center;color:var(--accent)}
+.sent pre{text-align:left;white-space:pre-wrap;background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:var(--mono);font-size:.78rem;color:var(--mute);width:100%;margin:0}
+.sent .cta-row{justify-content:center}
+
+/* reveal */
+.rv{transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .8s}
+.rv.pending{transform:translateY(28px);opacity:.15}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv.pending{transform:none;opacity:1}
+  html{scroll-behavior:auto}
+}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--fg);color:var(--ink);padding:10px 18px;border-radius:999px;font-weight:600;z-index:90;font-size:.9rem}
+/* ===== v2: gold, 3D, hero video, motion ===== */
+.btn.primary{background:var(--gold-grad);background-size:200% 100%;background-position:0 0;color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent) 70%,#000);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 38%,#000),0 12px 26px color-mix(in srgb,var(--accent) 26%,transparent),inset 0 1px 0 rgba(255,255,255,.55);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s,background-position .7s}
+.btn.primary:hover{background-position:100% 0;transform:translateY(-3px);box-shadow:0 7px 0 color-mix(in srgb,var(--accent) 38%,#000),0 20px 36px color-mix(in srgb,var(--accent) 36%,transparent),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn.primary:active{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 38%,#000),0 4px 10px color-mix(in srgb,var(--accent) 20%,transparent)}
+.btn.primary::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:shine 3.8s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,62%{left:-60%}100%{left:130%}}
+.btn:active{transform:translateY(1px)}
+.eyebrow,.stats b,.fact b,.pkg .price,.specs b,.est b,.tl b{background:var(--gold-grad);background-size:160% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.nav ul a{position:relative}
+.nav ul a::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--gold-grad);transform:scaleX(0);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.nav ul a:hover::after,.nav ul a.on::after{transform:scaleX(1)}
+header.top{transition:box-shadow .3s,border-color .3s}
+header.top.scrolled{box-shadow:0 12px 34px rgba(0,0,0,.5);border-bottom-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.logo{perspective:400px}
+.logo svg{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.logo:hover svg{transform:rotateY(360deg)}
+.progress{position:fixed;left:0;right:0;top:0;height:3px;background:var(--gold-grad);transform-origin:0 50%;transform:scaleX(0);z-index:70;pointer-events:none}
+.cursor-glow{position:fixed;left:-260px;top:-260px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 13%,transparent),transparent 65%);pointer-events:none;z-index:1;mix-blend-mode:screen;opacity:0;transition:opacity .5s}
+.cursor-glow.on{opacity:1}
+
+/* hero with background video */
+.hero{position:relative;min-height:min(88svh,840px);display:grid;align-items:center;overflow:hidden;isolation:isolate;perspective:1200px;border-bottom:1px solid var(--line)}
+.hero-media{position:absolute;inset:0;z-index:-2}
+.hero-media canvas,.hero-media video{width:100%;height:100%;display:block;object-fit:cover}
+.hero-shade{position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 60% at 50% 42%,rgba(8,12,16,.5),rgba(8,12,16,.3) 55%,rgba(8,12,16,.8)),linear-gradient(180deg,rgba(12,18,22,.5),transparent 28%,transparent 62%,var(--ink))}
+.hero-in{display:grid;justify-items:center;text-align:center;gap:16px;padding-block:72px 120px;transform-style:preserve-3d;transform:translateY(var(--sy,0px)) rotateX(var(--hx,0deg)) rotateY(var(--hy,0deg));transition:transform .3s ease-out}
+.hero-mark{transform:translateZ(60px);animation:coin 7s ease-in-out infinite}
+.hero-mark svg{width:96px;height:96px;filter:drop-shadow(0 14px 30px color-mix(in srgb,var(--accent) 50%,transparent))}
+@keyframes coin{0%,100%{transform:translateZ(60px) rotateY(-30deg) translateY(0)}50%{transform:translateZ(60px) rotateY(30deg) translateY(-10px)}}
+.hero .tag{font-family:var(--mono);font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi);transform:translateZ(30px);animation:fadeUp .9s .1s both}
+.hero-name{font-size:clamp(2.8rem,9.5vw,7.4rem);font-weight:800;letter-spacing:-.015em;line-height:1.02;padding-bottom:.1em;background:var(--gold-grad);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 1px 0 color-mix(in srgb,var(--accent) 62%,#000)) drop-shadow(0 2px 0 color-mix(in srgb,var(--accent) 48%,#000)) drop-shadow(0 3px 0 color-mix(in srgb,var(--accent) 34%,#000)) drop-shadow(0 4px 0 color-mix(in srgb,var(--accent) 22%,#000)) drop-shadow(0 18px 24px rgba(0,0,0,.7));transform:translateZ(80px);animation:goldShift 5s ease-in-out infinite alternate,nameIn 1.3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes goldShift{from{background-position:0% 50%}to{background-position:100% 50%}}
+@keyframes nameIn{from{opacity:0;transform:translateZ(80px) rotateX(55deg) scale(.85)}to{opacity:1;transform:translateZ(80px)}}
+.hero-line{font-family:var(--display);font-weight:600;font-size:clamp(1.15rem,2.7vw,1.95rem);line-height:1.3;transform:translateZ(40px);text-shadow:0 4px 18px rgba(0,0,0,.6)}
+.hero-line .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.1em}
+.hero-line .w > span{display:inline-block;animation:wordUp 1s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.45s + var(--i) * .09s)}
+@keyframes wordUp{from{transform:translateY(110%)}}
+.hero-p{color:#c6d0d6;max-width:58ch;font-size:1.06rem;text-shadow:0 2px 12px rgba(0,0,0,.7);animation:fadeUp 1s .95s both}
+.hero-cta{justify-content:center;margin-top:6px;animation:fadeUp 1s 1.15s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}}
+.hero-scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:grid;justify-items:center;gap:8px;font-family:var(--mono);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.hero-scroll span{width:22px;height:34px;border:1.5px solid var(--mute);border-radius:12px;position:relative}
+.hero-scroll span::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:7px;margin-left:-2px;border-radius:2px;background:var(--accent);animation:scrollDot 1.7s infinite}
+@keyframes scrollDot{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(14px)}}
+.hero .photo-tag{top:auto;bottom:18px;right:18px}
+@media (max-width:640px){.hero-in{padding-block:56px 104px}.hero .photo-tag{display:none}}
+.marquee{overflow:hidden;border-bottom:1px solid var(--line);background:var(--panel);padding-block:16px}
+.mq{display:flex;gap:28px;width:max-content;animation:mq 46s linear infinite;font-family:var(--display);font-size:1.02rem;white-space:nowrap;align-items:center}
+.mq span{color:var(--mute)}
+.mq span:nth-child(4n+1){color:var(--fg)}
+.mq i{font-style:normal;font-size:.7rem;color:var(--accent)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* 3D depth */
+.svc::after{background:radial-gradient(420px circle at var(--mx) var(--my),color-mix(in srgb,var(--accent) 24%,transparent),transparent 46%)}
+@media (hover:hover){.svc:hover{box-shadow:calc(var(--ry) * -2) calc(26px + var(--rx) * 2) 60px rgba(0,0,0,.6),0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent)}}
+.slides[data-tilt],.story-art[data-tilt],.media[data-tilt],.vid[data-tilt],.br[data-tilt]{transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .35s ease,border-color .25s}
+.band{background:linear-gradient(110deg,var(--panel2),var(--panel) 38%,color-mix(in srgb,var(--accent) 14%,var(--panel)) 50%,var(--panel) 62%,var(--panel2));background-size:300% 100%;animation:sheen 9s ease-in-out infinite alternate}
+@keyframes sheen{from{background-position:0% 0}to{background-position:100% 0}}
+.val,.mem,.cbox,.fact,.mat{transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .35s}
+@media (hover:hover){.val:hover,.mem:hover,.cbox:hover,.fact:hover,.mat:hover{transform:perspective(800px) translateY(-6px) rotateX(4deg);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 22px 40px rgba(0,0,0,.45)}}
+.rev{transition:transform .35s,border-color .3s}
+.rev:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}
+#app.enter{animation:pageIn .75s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pageIn{from{opacity:0;transform:translateY(26px)}}
+.rv{transition:transform 1s cubic-bezier(.2,.7,.2,1),opacity 1s,filter 1s}
+.rv.pending{transform:perspective(1000px) translateY(50px) rotateX(16deg) scale(.97);opacity:.12;filter:blur(4px)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv.pending{transform:none;opacity:1;filter:none}
+}
+/* living visuals */
+.sw-a{animation:sweepA 5.5s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes sweepA{0%{transform:translateX(0)}50%,100%{transform:translateX(1200px)}}
+.hexg{animation:hexPulse 3.2s ease-in-out infinite alternate}
+@keyframes hexPulse{from{opacity:.5}to{opacity:1}}
+.bob{transform-box:fill-box;transform-origin:center;animation:bob 2.6s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-5px) scale(.92)}to{transform:translateY(5px) scale(1.08)}}
+.drip{animation:drip 2.2s ease-in infinite}
+@keyframes drip{0%{transform:translateY(-8px);opacity:0}30%{opacity:.85}100%{transform:translateY(18px);opacity:0}}
+.roll{animation:roll 4s ease-in-out infinite alternate}
+@keyframes roll{to{transform:translateY(8px)}}
+.tw{animation:tw 1.8s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.15}to{opacity:1}}
+.spin{animation:spin .45s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.wob{animation:wob 3s ease-in-out infinite alternate}
+@keyframes wob{from{transform:translateX(-60px)}to{transform:translateX(70px)}}
+.pulse{animation:tw 1.5s ease-in-out infinite alternate}
+.dash{animation:dash 1.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-48}}
+.tap{animation:tap 1s ease-in-out infinite}
+@keyframes tap{0%,100%{transform:rotate(0)}50%{transform:rotate(-9deg)}}
+.story-art > svg,.post .pm svg{animation:kb2 14s ease-in-out infinite alternate}
+@keyframes kb2{to{transform:scale(1.08)}}
+.svc-media video,.sd-hero .media img,.sd-hero .media video{width:100%;height:100%;display:block;object-fit:cover}
+
+/* real photos & videos */
+.slides .sl img,.story-art img,.post .pm img,.article .cover img,.ba .layer img{width:100%;height:100%;object-fit:cover;display:block}
+.slides .sl.on img{animation:kb 7s ease-out both}
+.story-art > img,.post .pm img{animation:kb2 14s ease-in-out infinite alternate}
+.post .pm img{transition:transform .6s}
+.ba .dullimg img{filter:saturate(.25) brightness(.6) contrast(.8) sepia(.3) blur(.7px)}
+.vid video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;max-width:100%;background:#06090b}
+.vid{transform:none!important;contain:paint}
+@media (max-width:900px){.vid video{aspect-ratio:16/10}}
+.hero-media video{transform:scale(1.04)}
+
+/* FAQ */
+.faq-wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:clamp(24px,4vw,56px);align-items:start}
+.faq-side{position:sticky;top:calc(96px + env(safe-area-inset-top,0px));display:grid;gap:16px;padding:26px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(160deg,color-mix(in srgb,var(--accent) 12%,var(--panel)),var(--panel))}
+.faq-side p{color:var(--mute)}
+.faq-big{font-family:var(--display);font-weight:800;font-size:3.4rem;line-height:1;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+#faqList{display:grid;gap:10px;margin-top:18px}
+#faqList details{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:0 20px;transition:border-color .3s,background .3s,transform .3s}
+#faqList details:hover{transform:translateX(4px)}
+#faqList details[open]{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:var(--panel2)}
+#faqList summary{padding:18px 0;cursor:pointer;list-style:none;display:flex;gap:14px;align-items:center;font-weight:600}
+#faqList summary::-webkit-details-marker{display:none}
+#faqList .pm{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .4s cubic-bezier(.2,.8,.2,1),background .3s}
+#faqList .pm::before{content:"+";color:var(--accent);font-size:1.15rem;line-height:1}
+#faqList details[open] .pm{transform:rotate(135deg);background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.faq-a{color:var(--mute);padding:0 0 20px;max-width:68ch;animation:faqIn .45s cubic-bezier(.2,.8,.2,1)}
+.faq-a small{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cool);margin-bottom:6px}
+@keyframes faqIn{from{opacity:0;transform:translateY(-8px)}}
+@media (max-width:860px){.faq-wrap{grid-template-columns:1fr}.faq-side{position:static}}
+
+/* ===== performance ===== */
+header.top{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(12,18,22,.95)}
+.modal{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(4,7,9,.84)}
+.hero-name{animation:nameIn 1.3s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 3px 0 color-mix(in srgb,var(--accent) 35%,#000)) drop-shadow(0 14px 18px rgba(0,0,0,.55))}
+.hero-in{will-change:transform}
+.btn.primary::after{left:0;transform:translateX(-160%) skewX(-20deg);animation:shine2 4s ease-in-out infinite;will-change:transform}
+@keyframes shine2{0%,62%{transform:translateX(-160%) skewX(-20deg)}100%{transform:translateX(330%) skewX(-20deg)}}
+.band{animation:none;background-size:100% 100%}
+.rv{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s}
+.rv.pending{filter:none;transform:perspective(1000px) translateY(40px) rotateX(10deg)}
+.cursor-glow{display:none}
+.mq{will-change:transform}
+.story-art > img,.post .pm img,.story-art > svg,.post .pm svg{animation:none}
+@media (hover:hover){.svc:hover{box-shadow:0 26px 50px rgba(0,0,0,.5),0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent)}}
+
+/* opening drift intro */
+body.intro-on{overflow:hidden}
+body.intro-on .hero *{animation-play-state:paused!important}
+.intro-ov{position:fixed;inset:0;z-index:100;background:#06080a;overflow:hidden;transition:opacity .85s ease,transform .95s cubic-bezier(.7,0,.2,1),filter .85s}
+.intro-ov.out{opacity:0;transform:scale(1.14);filter:blur(12px);pointer-events:none}
+.intro-ov canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.intro-brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:12px;text-align:center;width:min(88vw,720px);pointer-events:none}
+.intro-brand > *{opacity:0;transform:translateY(18px) scale(.9);transition:opacity .9s,transform 1.1s cubic-bezier(.2,.8,.2,1),letter-spacing 1.6s cubic-bezier(.2,.8,.2,1)}
+.intro-brand.show > *{opacity:1;transform:none}
+.intro-brand .ib-mark svg{width:76px;height:76px;filter:drop-shadow(0 10px 26px color-mix(in srgb,var(--accent) 55%,transparent))}
+.ib-name{font-family:var(--display);font-weight:800;font-size:clamp(2rem,7.5vw,5.2rem);line-height:1.05;letter-spacing:.35em;padding-bottom:.08em;background:var(--gold-grad);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 0 color-mix(in srgb,var(--accent) 45%,#000)) drop-shadow(0 4px 0 color-mix(in srgb,var(--accent) 25%,#000)) drop-shadow(0 16px 24px rgba(0,0,0,.8));transition-delay:.15s!important}
+.intro-brand.show .ib-name{letter-spacing:-.01em}
+.ib-tag{font-family:var(--mono);font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-hi);transition-delay:.5s!important}
+.intro-hud{position:absolute;left:24px;bottom:calc(24px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.7rem;color:var(--mute);letter-spacing:.16em;text-transform:uppercase}
+.intro-hud i{display:block;width:110px;height:2px;background:#1e2830;overflow:hidden;border-radius:2px}
+.intro-hud b{display:block;height:100%;width:0;background:var(--gold-grad)}
+.intro-skip{position:absolute;right:20px;bottom:calc(18px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--fg);padding:10px 16px;border-radius:999px;cursor:pointer;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em}
+.intro-skip:hover{border-color:var(--accent)}
+@media (max-width:560px){.intro-hud i{width:70px}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap nav">
+    <ul>
+      <li><a href="#home" data-r="home">Home</a></li>
+      <li><a href="#services" data-r="services">Services</a></li>
+      <li><a href="#branches" data-r="branches">Branches</a></li>
+      <li><a href="#about" data-r="about">About Us</a></li>
+    </ul>
+    <a href="#home" class="logo" id="hdrLogo"></a>
+    <ul class="right">
+      <li><a href="#blog" data-r="blog">Blog</a></li>
+      <li><a href="#faq-all" data-r="faq">FAQ</a></li>
+      <li><a href="#contact" data-r="contact">Contact Us</a></li>
+      <li><button class="btn primary" data-enquire style="padding:10px 18px">Get a quote</button></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="drawer" id="drawer">
+    <nav>
+      <a href="#home">Home</a><a href="#services">Services</a><a href="#branches">Branches</a><a href="#about">About Us</a><a href="#blog">Blog</a><a href="#faq-all">FAQ</a><a href="#contact">Contact Us</a>
+      <button class="btn primary" data-enquire style="margin-top:12px">Get a quote</button>
+    </nav>
+  </div>
+</header>
+
+<main id="app"></main>
+<footer id="foot"></footer>
+
+<button class="fab-demo" id="demoBtn" title="Change the brand name, phone and colours for a client demo">Customize demo</button>
+<a class="fab-wa" id="fabWa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"></a>
+<button class="fab-chat" id="fabChat" aria-label="Open chat assistant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg><span class="ping"></span></button>
+<div id="chatMount"></div>
+<div id="modalMount"></div>
+
+<script>
+/* ================= CONFIG — edit these for each client ================= */
+const DEFAULT_BRAND = {
+  name: "Your Brand",
+  tagline: "Luxury Car Detailing & Care Studio",
+  intro: "Showroom shine, paint protection and honest workshop care, all under one roof. We treat every car like it's leaving for a wedding.",
+  phone: "+91 00000 00000",      // shown on the site
+  whatsapp: "910000000000",      // digits only, with country code 91
+  email: "yourbrand@gmail.com",
+  city: "Delhi",
+  accent: "#D4A537"
+};
+/* Background video for the top of the home page.
+   Put the shop's video file name or link here, e.g. "studio-reel.mp4".
+   Leave empty to use the animated studio background. */
+const HERO_VIDEO = "media/hero.mp4";
+/* Photos or videos for each service (AI-made or the shop's real ones).
+   Put a file name next to a service, e.g. "ceramic.jpg" or "ceramic.mp4".
+   Empty = the animated sample visual. */
+const MEDIA = {
+  "foam-wash": "media/foam-wash.jpg", "interior": "media/interior.jpg", "paint-correction": "media/paint-correction.jpg", "ceramic": "media/ceramic.jpg",
+  "ppf": "media/ppf.jpg", "dent-paint": "media/dent-paint.jpg", "graphene": "media/graphene.jpg", "wrap": "media/wrap.jpg",
+  "headlight": "media/headlight.jpg", "service": "media/service.jpg", "engine-bay": "media/engine-bay.jpg"
+};
+/* Videos for the "See how we work" section. Empty = animated sample. */
+const VIDEO_FILES = { foam: "media/video-foam.mp4", polish: "media/video-polish.mp4", ceramic: "media/video-ceramic.mp4" };
+/* Which photo each blog post uses as its cover */
+const POST_IMG = { "ceramic-vs-ppf": "ppf", "after-monsoon": "foam-wash", "black-car-swirls": "paint-correction", "summer-paint": "graphene" };
+/* The photos and videos are packed inside this page (window.__ASSETS),
+   so everyone you share the link with sees them. A() swaps a file name for the packed copy. */
+const ASSETS = window.__ASSETS || {};
+const A = p => (p && ASSETS[p]) || p;
+const HERO_SRC = A(HERO_VIDEO);
+const HERO_POSTER = HERO_VIDEO ? A(HERO_VIDEO.replace(/\.mp4$/i, "-poster.jpg")) : "";
+for (const k in MEDIA) MEDIA[k] = A(MEDIA[k]);
+for (const k in VIDEO_FILES) VIDEO_FILES[k] = A(VIDEO_FILES[k]);
+let BRAND = Object.assign({}, DEFAULT_BRAND);
+try { const s = JSON.parse(localStorage.getItem("demoBrand") || "null"); if (s) BRAND = Object.assign(BRAND, s); } catch(e) {}
+if (BRAND.accent === "#E3B866") BRAND.accent = DEFAULT_BRAND.accent;
+
+/* ================= DATA ================= */
+const SERVICES = [
+ {id:"foam-wash",name:"Foam Wash & Detail",cat:"Detailing",kind:"foam",hue:205,from:2999,time:"2–3 hrs",warranty:"—",
+  short:"Two-bucket hand wash with pH-neutral snow foam, wheel and arch cleaning, glass polish and a quick sealant coat. The safe weekly reset for cars that face Delhi dust every day.",
+  inc:["pH-neutral snow foam pre-wash","Two-bucket hand wash with microfiber mitts","Wheel, tyre and wheel-arch deep clean","Door jambs and fuel lid cleaned","Glass cleaned inside and out","Spray sealant for 3–4 weeks of shine"],
+  steps:[["Pre-rinse and snow foam","Loosens dust and grit before anything touches the paint."],["Two-bucket wash","One bucket for soap, one for rinsing the mitt, so dirt never goes back on the car."],["Wheels and arches","Dedicated brushes and iron remover for brake dust."],["Dry and seal","Plush towel drying, then a spray sealant for gloss and water beading."]]},
+ {id:"interior",name:"Interior Deep Cleaning",cat:"Detailing",kind:"interior",hue:28,from:5999,time:"5–6 hrs",warranty:"—",
+  short:"Seats, roof lining, carpets and AC vents steam-cleaned and vacuumed. Leather gets cleaned and conditioned, plastics get UV protection, and the cabin gets an odour treatment.",
+  inc:["Full vacuum including under seats","Steam cleaning of fabric seats and carpets","Leather cleaning and conditioning","Roof lining and door pads cleaned","AC vent and dashboard detailing","Odour removal and germ-kill treatment"],
+  steps:[["Dry clean-out","Mats out, full vacuum and compressed-air blow-out of every gap."],["Steam and extract","Hot steam lifts stains; an extractor pulls the dirty water out."],["Leather and plastics","pH-balanced cleaner, then conditioner and a matte UV dressing."],["Odour treatment","Germ-kill fogging so the cabin smells clean, not perfumed."]]},
+ {id:"paint-correction",name:"Paint Correction",cat:"Detailing",kind:"polish",hue:2,from:14999,time:"1–2 days",warranty:"—",
+  short:"We measure paint depth in microns, then machine-polish in stages to remove swirl marks, light scratches and water spots. Gloss comes back without removing more clear coat than needed.",
+  inc:["Paint depth reading on every panel","Clay bar decontamination","Multi-stage machine compounding","Fine polishing for maximum gloss","Swirl and water-spot removal","Before and after gloss readings"],
+  steps:[["Inspect and measure","Paint depth gauge on each panel, so we know how much clear coat we can safely work."],["Decontaminate","Iron remover and clay bar remove bonded grit."],["Compound","Cuts out swirls and light scratches under LED inspection lights."],["Refine","Finishing polish brings the gloss reading up and the haze down."]]},
+ {id:"ceramic",name:"Ceramic Coating",cat:"Protection",kind:"beads",hue:214,from:34999,time:"2 days",warranty:"Up to 5 yrs",
+  short:"A 9H hardness coating bonds to the clear coat for up to 5 years. Water beads off, dirt struggles to stick, and washing takes half the time.",
+  inc:["Foam wash and full decontamination","Single-stage paint enhancement polish","Panel wipe to remove polishing oils","9H ceramic on paint, alloys and glass","IR lamp curing","Warranty card and free first maintenance wash"],
+  steps:[["Prep","Wash, clay and polish so the coating locks in a clean, glossy finish."],["Panel wipe","Removes oils so the coating bonds directly to the clear coat."],["Apply and level","Applied panel by panel, then levelled before it flashes."],["Cure","Infrared lamps speed up curing. Keep the car dry for 24 hours."]]},
+ {id:"ppf",name:"Paint Protection Film",cat:"Protection",kind:"film",hue:165,from:149999,time:"3–4 days",warranty:"Up to 10 yrs",
+  short:"Clear, self-healing TPU film that takes stone chips, key scratches and bird droppings so your paint doesn't. Gloss or matte finish, with up to 10 years of warranty.",
+  inc:["190-micron TPU film, gloss or matte","Self-healing top coat for fine scratches","Computer-cut patterns for your exact model","Wrapped edges where the panel allows","Full body, front kit or high-impact areas","Warranty against yellowing and peeling"],
+  steps:[["Wash and correct","Any swirl left under the film stays there, so we correct first."],["Pattern cut","Film is plotter-cut for your car model, no blades on the paint."],["Install","Slip solution and squeegee for a bubble-free finish."],["Post-heat and check","Edges are heated to lock in, then inspected under lights after 48 hours."]]},
+ {id:"dent-paint",name:"Denting & Painting",cat:"Workshop",kind:"dent",hue:350,from:7999,time:"1–3 days",warranty:"1 yr on paint",unit:"/ panel",
+  short:"Dents and scratches repaired panel by panel, with computer colour matching and a baked finish in our paint booth. Insurance claims handled for you.",
+  inc:["Paintless dent repair where possible","Computer colour matching","Primer, base coat and clear coat","Oven-baked finish in a dust-free booth","Cashless insurance claim support","Post-paint polish so panels match"],
+  steps:[["Assess","We check if the dent can be pushed out without paint first."],["Repair and prime","Panel shaped, filled only if needed, then primed."],["Colour match and spray","Computer-matched paint sprayed in the booth."],["Bake and polish","Baked to harden, then polished to blend with the rest of the car."]]},
+ {id:"graphene",name:"Graphene Coating",cat:"Protection",kind:"gloss",hue:262,from:44999,time:"2 days",warranty:"Up to 7 yrs",
+  short:"The next step up from ceramic. Better heat resistance, fewer water spots and a deeper gloss, built for cars that park outdoors in Delhi summers.",
+  inc:["Full decontamination wash","Paint enhancement polish","Graphene-infused coating on paint","Alloy and glass coating","IR curing","Annual check-up for warranty"],
+  steps:[["Prep","Wash, clay and polish."],["Panel wipe","Bare clear coat for the best bond."],["Coat","Graphene layer applied and levelled."],["Cure and inspect","IR curing and a final inspection under lights."]]},
+ {id:"wrap",name:"Car Wrap & Colour Change",cat:"Styling",kind:"wrap",hue:285,from:199999,time:"4–5 days",warranty:"Up to 3 yrs",
+  short:"Change your car's colour in gloss, satin or matte without touching the original paint. Full wraps, roof wraps, chrome delete and custom graphics.",
+  inc:["Cast vinyl in 100+ colours","Gloss, satin, matte and metallic finishes","Roof, mirror and chrome-delete options","Door jamb wrapping on request","Removable without damaging paint","Custom graphics and stripes"],
+  steps:[["Choose","Pick colour and finish from real samples on your car."],["Prep","Deep clean and remove trims, badges and handles."],["Wrap","Vinyl applied panel by panel and tucked under edges."],["Reassemble","Trims refitted and edges heat-sealed."]]},
+ {id:"headlight",name:"Headlight Restoration",cat:"Detailing",kind:"headlight",hue:44,from:2999,time:"1 hr",warranty:"6 months",
+  short:"Yellow, foggy headlights are sanded, polished and UV-sealed so they look new and throw light properly again at night.",
+  inc:["Wet sanding of oxidised layer","Machine polishing to clarity","UV-resistant sealant","Both headlights included"],
+  steps:[["Mask","Paint around the lamps is taped off."],["Sand","Progressive wet sanding removes the yellow layer."],["Polish","Machine polish brings back clarity."],["Seal","UV coat slows yellowing down again."]]},
+ {id:"service",name:"Periodic Car Service",cat:"Workshop",kind:"service",hue:192,from:9999,time:"Same day",warranty:"1,000 km",
+  short:"Engine oil, filters, brakes and a 40-point inspection by trained mechanics, with genuine parts and a clear bill before we start any work.",
+  inc:["Engine oil and oil filter change","Air and AC filter check or change","Brake inspection and cleaning","40-point health check report","Battery and coolant check","Free pick-up and drop nearby"],
+  steps:[["Pick-up and check-in","Photos of the car and a written job card."],["Inspect","40-point check, then a quote on WhatsApp before any extra work."],["Service","Genuine parts, torque-checked fitting."],["Test and deliver","Road test, wash and delivery with the old parts shown to you."]]},
+ {id:"engine-bay",name:"Engine Bay Detailing",cat:"Detailing",kind:"engine",hue:15,from:2999,time:"1–2 hrs",warranty:"—",
+  short:"Degreasing, safe low-pressure rinse and dressing for hoses and plastics. A clean engine bay also makes oil leaks easy to spot.",
+  inc:["Sensitive electricals covered","Citrus degreaser","Low-pressure rinse","Air dry and dressing on rubber and plastics"],
+  steps:[["Cover","Alternator, fuse box and intake are protected."],["Degrease","Citrus degreaser and soft brushes."],["Rinse and dry","Low pressure only, then compressed air."],["Dress","Water-based dressing for a clean, non-greasy look."]]}
+];
+const BRANCHES = [
+ {id:"main",name:"Main Studio",area:"Kirti Nagar",addr:"Your full address here, Kirti Nagar, New Delhi 110015",hours:"Mon–Sat 9:30 am – 8:00 pm · Sun 10 am – 4 pm",bays:8,tags:["Detailing","Ceramic & PPF","Paint booth","Workshop"],note:"Our flagship with the hexagon-lit detailing bay, PPF clean room and paint booth."},
+ {id:"rajouri",name:"Branch 2",area:"Rajouri Garden",addr:"Your branch address here, Rajouri Garden, New Delhi 110027",hours:"Mon–Sat 10 am – 8 pm",bays:4,tags:["Detailing","Ceramic","Interior"],note:"Quick detailing and coating studio, close to the main market."},
+ {id:"dwarka",name:"Branch 3",area:"Dwarka",addr:"Your branch address here, Sector 12, Dwarka, New Delhi 110075",hours:"Mon–Sun 9 am – 7 pm",bays:5,tags:["Detailing","Workshop","Denting & Painting"],note:"Workshop and body shop with cashless insurance support."}
+];
+const REVIEWS = [
+ ["Rohit M.","BMW X5 · Ceramic Coating","Six months in and the car still beads water like day one. They showed me paint readings before and after, which I didn't expect."],
+ ["Simran K.","Range Rover Velar · Interior Deep Clean","The cream leather had stains from two years of school runs. It came back looking new and the smell was gone. Pick-up and drop was on time."],
+ ["Aditya S.","Porsche Cayenne · PPF","Got the front kit done before a road trip to Spiti. Took a few stone hits, film took them all. Paint underneath is perfect."],
+ ["Neha G.","Mercedes C-Class · Denting & Painting","Insurance claim was handled completely by them. Colour match on the door is spot on."],
+ ["Farhan A.","BMW M340i · Paint Correction","Black car, lots of swirls from roadside washers. Now it looks like a mirror under the lights."],
+ ["Karan V.","Audi Q7 · Periodic Service","They sent a WhatsApp video of what needed fixing before doing anything. Clear bill, no surprises."]
+];
+const POSTS = [
+ {id:"ceramic-vs-ppf",title:"Ceramic coating or PPF: which one for Delhi roads?",date:"Oct 2026",read:"5 min",kind:"film",hue:165,
+  ex:"Both protect your paint, but in very different ways. Here's how to choose based on how and where you drive.",
+  body:[["","Ceramic coating is a thin, hard layer that makes paint glossy and easy to clean. Paint protection film is a thick, flexible layer that physically absorbs impacts."],["What ceramic is good at","Water beading, UV protection, resistance to bird droppings and easier washing. It will not stop a stone chip on the highway."],["What PPF is good at","Stone chips, light scratches and parking-lot scuffs. The self-healing top coat removes fine swirls with heat from the sun."],["Our usual advice","For a daily-driven luxury sedan, ceramic gives the best value. For a new SUV, a supercar or frequent highway trips, PPF on the front plus ceramic on the rest is the sweet spot."]]},
+ {id:"after-monsoon",title:"How to wash your car after the monsoon",date:"Sep 2026",read:"4 min",kind:"foam",hue:205,
+  ex:"Mud, acid rain and stagnant water leave more behind than you can see. A simple routine to undo the damage.",
+  body:[["","Monsoon water carries pollutants that etch into paint when they dry. Mud in the wheel arches holds moisture against metal for weeks."],["Start with the underbody","Rinse the arches and underbody first. That's where rust starts."],["Never dry-wipe","Wiping a dusty car with a cloth drags grit across the paint and causes swirl marks."],["Seal it","A spray sealant or a coating makes the next wash much easier."]]},
+ {id:"black-car-swirls",title:"Why your black car shows swirl marks",date:"Aug 2026",read:"3 min",kind:"polish",hue:220,
+  ex:"Those spider-web circles under streetlights come from washing, not driving. Here's where they come from.",
+  body:[["","Swirl marks are tiny scratches in the clear coat, usually from dirty cloths, automatic brushes or roadside washers using one bucket."],["Can they be removed?","Yes. Machine polishing levels the clear coat so light reflects evenly again. We measure paint depth first so we never remove too much."],["How to avoid them","Two-bucket washing, clean microfiber and a coating to make the surface slicker."]]},
+ {id:"summer-paint",title:"What Delhi summers do to your paint",date:"Jun 2026",read:"4 min",kind:"gloss",hue:30,
+  ex:"Forty-five degree afternoons, dust storms and bird droppings that bake on. A quick protection plan.",
+  body:[["","High heat speeds up oxidation, which is why red and black cars fade first."],["Bird droppings","They're acidic. In summer heat they can etch the clear coat within hours, so clean them off quickly."],["The plan","Park in shade where you can, wash weekly and get a coating with good heat resistance."]]}
+];
+
+/* ================= HELPERS ================= */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const inr = n => "₹" + Math.round(n).toLocaleString("en-IN");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const svcById = id => SERVICES.find(s => s.id === id);
+const waLink = text => `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`;
+const gmailLink = (subj, body) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(BRAND.email)}&su=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+const ICON = {
+  wa:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3z"/></svg>',
+  mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  play:'<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>',
+  pause:'<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>'
+};
+function markSVG(size=34){
+  return `<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><defs><linearGradient id="mk${size}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="${BRAND.accent}"/><stop offset="1" stop-color="#6d5326"/></linearGradient></defs><path d="M32 3 57 17.5v29L32 61 7 46.5v-29z" fill="none" stroke="url(#mk${size})" stroke-width="3.2"/><path d="M15 39c3-1 5-2 8-2l6-7c2-2 4-3 7-3h5c3 0 5 2 7 4l2 3c2 0 4 1 4 3v2H15z" fill="url(#mk${size})"/><circle cx="23" cy="41" r="3.2" fill="#0c1216" stroke="url(#mk${size})" stroke-width="1.6"/><circle cx="43" cy="41" r="3.2" fill="#0c1216" stroke="url(#mk${size})" stroke-width="1.6"/><path d="M20 22l14-6" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/></svg>`;
+}
+
+/* ================= SCENE ARTWORK (stand-in photos) ================= */
+const CAR = "M80 330 C90 300 130 290 190 285 L270 280 C300 240 340 205 400 200 L520 200 C570 202 610 235 640 270 L700 280 C730 285 745 300 748 320 L750 345 C750 355 742 360 730 360 L690 360 A55 55 0 0 0 580 360 L300 360 A55 55 0 0 0 190 360 L95 360 C82 360 76 350 80 330 Z";
+const WIN1 = "M294 280 C318 246 350 224 398 220 L466 220 L466 280 Z", WIN2 = "M480 220 L518 220 C556 222 586 246 610 276 L480 280 Z";
+function hexPts(x,y,r){let p=[];for(let i=0;i<6;i++){const a=Math.PI/3*i;p.push((x+r*Math.cos(a)).toFixed(1)+","+(y+r*Math.sin(a)).toFixed(1))}return p.join(" ")}
+const HEX = (()=>{let s="";for(let row=0;row<3;row++){for(let c=0;c<14;c++){const x=c*66+(row%2?33:0)-10,y=34+row*38;s+=`<polygon points="${hexPts(x,y,24)}" fill="none" stroke="#e9f2f7" stroke-opacity="${(0.62-row*0.17).toFixed(2)}" stroke-width="3.2"/>`}}return s})();
+function rng(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>(s=s*16807%2147483647)/2147483647}
+let SID=0;
+function wheel(cx){return `<g><circle cx="${cx}" cy="360" r="46" fill="#07090b"/><circle cx="${cx}" cy="360" r="31" fill="#2b343c" stroke="#9aa6af" stroke-width="2"/>${[0,72,144,216,288].map(a=>`<line x1="${cx}" y1="360" x2="${(cx+28*Math.cos(a*Math.PI/180)).toFixed(1)}" y2="${(360+28*Math.sin(a*Math.PI/180)).toFixed(1)}" stroke="#aeb9c1" stroke-width="6" stroke-linecap="round"/>`).join("")}<circle cx="${cx}" cy="360" r="8" fill="#d6dde2"/></g>`}
+function scene(kind,hue=210,o={}){
+  const id="g"+(++SID), dull=!!o.dull;
+  if(kind==="interior") return interiorScene(id,hue);
+  const sat=dull?10:58, L1=dull?40:60, L2=dull?26:34, L3=dull?14:13;
+  const r=rng(hue*97+kind.length*13+(dull?7:0)+1);
+  let inner="", outer="";
+  if(kind==="foam"){for(let i=0;i<46;i++){const x=110+r()*620,y=262+r()*95;inner+=`<circle class="bob" style="animation-delay:-${(i%7*.4).toFixed(1)}s" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(8+r()*20).toFixed(0)}" fill="#f5f8fa" opacity="${(.75+r()*.25).toFixed(2)}"/>`}
+    for(let i=0;i<10;i++){const x=150+r()*560;outer+=`<path class="drip" style="animation-delay:-${(i*.37).toFixed(2)}s" d="M${x.toFixed(0)} 360 q4 ${12+r()*14} 0 ${20+r()*12}" stroke="#e9f1f5" stroke-width="5" stroke-linecap="round" fill="none" opacity=".7"/>`}}
+  if(kind==="beads"){let b="";for(let i=0;i<120;i++){const x=90+r()*660,y=205+r()*150,rr=1.5+r()*4.5;b+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${rr.toFixed(1)}" fill="#fff" opacity=".55"/><circle${i%4?"":` class="tw" style="animation-delay:-${(i%9*.2).toFixed(1)}s"`} cx="${(x-rr*.3).toFixed(1)}" cy="${(y-rr*.35).toFixed(1)}" r="${(rr*.35).toFixed(1)}" fill="#fff"/>`}inner+=`<g class="roll">${b}</g>`}
+  if(kind==="film"){inner+=`<polygon points="300,190 380,190 230,380 150,380" fill="#fff" opacity=".16"/><polygon points="420,190 440,190 290,380 270,380" fill="#fff" opacity=".12"/><path class="dash" d="${CAR}" fill="none" stroke="#bff3e3" stroke-width="5" stroke-dasharray="14 10" opacity=".55"/>`;
+    outer+=`<g font-family="JetBrains Mono,monospace" font-size="20" fill="#bff3e3"><rect x="560" y="120" width="180" height="40" rx="8" fill="#08100d" opacity=".75"/><text x="576" y="147">TPU · 190 µm</text></g>`}
+  if(kind==="polish"){for(let i=0;i<70;i++){const x=90+r()*330,y=210+r()*140;inner+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(10+r()*30).toFixed(0)}" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="1"/>`}
+    inner+=`<rect x="0" y="0" width="430" height="500" fill="#000" opacity=".22"/>`;
+    outer+=`<g class="wob"><circle cx="440" cy="300" r="44" fill="#f2c96f"/><circle cx="440" cy="300" r="30" fill="#1b1b1b"/><g class="spin" style="transform-origin:440px 300px"><rect x="412" y="296" width="56" height="8" rx="4" fill="#f2c96f" opacity=".75"/></g><rect x="425" y="218" width="30" height="70" rx="10" fill="#2a2f34"/><rect x="400" y="200" width="120" height="30" rx="14" fill="#3a4148"/></g><g font-family="JetBrains Mono,monospace" font-size="19" fill="#fff"><rect x="40" y="128" width="170" height="38" rx="8" fill="#000" opacity=".55"/><text x="54" y="153">Before · 48 GU</text><rect x="590" y="128" width="170" height="38" rx="8" fill="#000" opacity=".55"/><text x="604" y="153">After · 91 GU</text></g>`}
+  if(kind==="headlight"){outer+=`<defs><radialGradient id="${id}hl"><stop offset="0" stop-color="#fff6d8"/><stop offset=".3" stop-color="#ffe7a3" stop-opacity=".7"/><stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/></radialGradient></defs><ellipse class="pulse" cx="760" cy="312" rx="120" ry="70" fill="url(#${id}hl)"/><polygon points="760,300 800,250 800,380 760,325" fill="#fff3c4" opacity=".25"/>`}
+  if(kind==="dent"){inner+=`<ellipse cx="545" cy="318" rx="42" ry="22" fill="#000" opacity=".35"/><ellipse cx="538" cy="310" rx="26" ry="10" fill="#fff" opacity=".25"/><rect x="0" y="0" width="470" height="500" fill="#fff" opacity=".04"/>`;
+    outer+=`<g class="tap" style="transform-origin:620px 170px" stroke="#cfd8de" stroke-width="6" stroke-linecap="round"><line x1="560" y1="250" x2="620" y2="170"/></g><circle cx="560" cy="252" r="9" fill="#e3b866"/>`}
+  if(kind==="wrap"){inner+=`<defs><linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${(hue+150)%360} 70% 62%)"/><stop offset="1" stop-color="hsl(${(hue+150)%360} 70% 18%)"/></linearGradient></defs><polygon points="470,150 800,150 800,420 400,420" fill="url(#${id}w)"/><line x1="470" y1="150" x2="400" y2="420" stroke="#fff" stroke-width="3" opacity=".6"/>`}
+  if(kind==="engine"||kind==="service"){outer+=`<g transform="translate(640 120)"><circle r="44" fill="#0b1014" stroke="#e3b866" stroke-width="3"/><circle class="spin" style="animation-duration:3s" r="22" fill="none" stroke="#e3b866" stroke-width="12" stroke-dasharray="7 6"/><circle r="9" fill="#e3b866"/></g>`;
+    if(kind==="engine") outer+=`<g fill="#fff">${[0,1,2,3,4].map(i=>`<path class="tw" style="animation-delay:-${i*.35}s" d="M${200+i*110} ${230+(i%2)*40} l4 -14 4 14 14 4 -14 4 -4 14 -4 -14 -14 -4z" opacity=".8"/>`).join("")}</g>`;
+    else outer+=`<g font-family="JetBrains Mono,monospace" font-size="18" fill="#fff"><rect x="40" y="126" width="200" height="38" rx="8" fill="#000" opacity=".55"/><text x="54" y="151">40-point check ✓</text></g>`}
+  if(kind==="gloss"){inner+=`<polygon points="240,190 300,190 150,380 90,380" fill="#fff" opacity=".22"/><polygon points="520,190 540,190 390,380 370,380" fill="#fff" opacity=".16"/>`}
+  const haze=dull?`<rect x="0" y="0" width="800" height="500" fill="#c9c2b4" opacity=".18"/>`+Array.from({length:60},()=>`<circle cx="${(90+r()*660).toFixed(0)}" cy="${(205+r()*150).toFixed(0)}" r="${(8+r()*26).toFixed(0)}" fill="none" stroke="#fff" stroke-opacity=".22"/>`).join(""):"";
+  return `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(o.label||"Car in detailing studio")}">
+  <defs><linearGradient id="${id}bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2a34"/><stop offset=".6" stop-color="#0f171d"/><stop offset="1" stop-color="#080c0f"/></linearGradient>
+  <linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${hue} ${sat}% ${L1}%)"/><stop offset=".5" stop-color="hsl(${hue} ${sat}% ${L2}%)"/><stop offset="1" stop-color="hsl(${hue} ${sat}% ${L3}%)"/></linearGradient>
+  <radialGradient id="${id}sh" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".8"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <clipPath id="${id}c"><path d="${CAR}"/></clipPath></defs>
+  <rect width="800" height="500" fill="url(#${id}bg)"/><g class="hexg" style="animation-delay:-${hue%3}s">${HEX}</g>
+  <rect y="395" width="800" height="105" fill="#0a1014"/><line x1="0" y1="395" x2="800" y2="395" stroke="#24313b"/>
+  <ellipse cx="415" cy="402" rx="370" ry="24" fill="url(#${id}sh)"/>
+  <path d="${CAR}" fill="url(#${id}p)"/>
+  <g clip-path="url(#${id}c)">${dull?"":`<polygon class="sw-a" style="animation-delay:-${((hue*37)%50)/10}s" points="-60,185 -10,185 -150,385 -200,385" fill="#fff" opacity=".28"/>`}${dull?"":`<path d="M60 292 Q420 262 760 296" stroke="#fff" stroke-width="3" fill="none" opacity=".5"/><polygon points="${hue%2?"360":"600"},190 ${hue%2?"395":"635"},190 ${hue%2?"250":"490"},380 ${hue%2?"215":"455"},380" fill="#fff" opacity=".1"/>`}${inner}${haze}</g>
+  <path d="${WIN1}" fill="#0a1117"/><path d="${WIN2}" fill="#0a1117"/>
+  <path d="M310 272 L350 232" stroke="#9fb6c6" stroke-width="5" opacity=".35"/><path d="M500 270 L530 232" stroke="#9fb6c6" stroke-width="4" opacity=".3"/>
+  <line x1="472" y1="226" x2="472" y2="352" stroke="#000" stroke-opacity=".35" stroke-width="2"/>
+  <path d="M722 296 L746 304 L746 318 L716 312 Z" fill="#f4f1e6"/><path d="M84 312 L102 308 L100 326 L82 328 Z" fill="#d23b2f"/>
+  ${wheel(245)}${wheel(635)}${outer}</svg>`;
+}
+function interiorScene(id,hue){
+  return `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Car interior after deep cleaning">
+  <defs><linearGradient id="${id}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2420"/><stop offset="1" stop-color="#0d0b0a"/></linearGradient>
+  <linearGradient id="${id}s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${hue} 45% 46%)"/><stop offset="1" stop-color="hsl(${hue} 45% 20%)"/></linearGradient></defs>
+  <rect width="800" height="500" fill="url(#${id}a)"/>
+  <path d="M-20 70 Q400 -10 820 70 L820 0 L-20 0Z" fill="#14100e"/>
+  <path d="M0 220 Q400 150 800 220 L800 270 Q400 205 0 270Z" fill="#1d1a18"/>
+  <rect x="330" y="180" width="140" height="40" rx="8" fill="#0b0f12" stroke="#6b7a85"/><rect x="342" y="190" width="116" height="20" rx="4" fill="#5fa8d0" opacity=".55"/>
+  <g transform="translate(230 320)"><circle r="96" fill="none" stroke="#151515" stroke-width="20"/><circle r="96" fill="none" stroke="#3a3a3a" stroke-width="3"/><rect x="-80" y="-10" width="160" height="22" rx="10" fill="#151515"/><circle r="30" fill="#1d1d1d" stroke="#555"/></g>
+  <path d="M560 500 L560 300 Q560 250 610 245 L690 240 Q740 238 742 290 L746 500Z" fill="url(#${id}s)"/>
+  <path d="M575 470 L575 310 Q576 268 612 264 L686 260 Q726 260 728 300 L730 470" fill="none" stroke="#f3e2cc" stroke-width="2" stroke-dasharray="6 6" opacity=".55"/>
+  <rect x="600" y="140" width="120" height="105" rx="40" fill="url(#${id}s)"/>
+  ${[0,1,2,3,4,5].map(i=>`<path class="tw" style="animation-delay:-${i*.3}s" d="M${130+i*100} 120 l5 -15 5 15 15 5 -15 5 -5 15 -5 -15 -15 -5z" fill="#fff" opacity=".55"/>`).join("")}
+  </svg>`;
+}
+function mapSVG(seed){
+  const r=rng(seed*31+5);let s=`<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="400" height="300" fill="#121a20"/>`;
+  for(let i=0;i<9;i++){const y=r()*300;s+=`<path d="M0 ${y.toFixed(0)} L400 ${(y+(r()-.5)*80).toFixed(0)}" stroke="#1f2b34" stroke-width="${(4+r()*10).toFixed(0)}"/>`}
+  for(let i=0;i<7;i++){const x=r()*400;s+=`<path d="M${x.toFixed(0)} 0 L${(x+(r()-.5)*90).toFixed(0)} 300" stroke="#1f2b34" stroke-width="${(4+r()*8).toFixed(0)}"/>`}
+  s+=`<path d="M0 ${150+r()*40} C120 120 260 210 400 160" stroke="#2b4250" stroke-width="16" fill="none"/>`;
+  s+=`<circle cx="200" cy="140" r="34" fill="${BRAND.accent}" opacity=".15"/><path d="M200 162c-14-18-22-30-22-42a22 22 0 0 1 44 0c0 12-8 24-22 42z" fill="${BRAND.accent}"/><circle cx="200" cy="119" r="8" fill="#121a20"/></svg>`;
+  return s;
+}
+
+/* ================= COMPONENTS ================= */
+/* WebM first (plays everywhere), MP4 as backup */
+function vidSources(f){if(/^(data|blob):/.test(f))return `<source src="${f}" type="video/mp4">`;return /\.mp4$/i.test(f)?`<source src="${esc(f)}" type="video/mp4"><source src="${esc(f.replace(/\.mp4$/i,".webm"))}" type="video/webm">`:`<source src="${esc(f)}">`}
+function postVis(p){const m=MEDIA[POST_IMG[p.id]];return m?`<img src="${m}" alt="${esc(p.title)}" loading="lazy" decoding="async">`:scene(p.kind,p.hue,{label:p.title})}
+function visual(s){
+  const m=MEDIA[s.id];
+  if(m) return (/\.(mp4|webm|mov)$/i.test(m)||/^data:video/.test(m))?`<video src="${esc(m)}" autoplay muted loop playsinline aria-label="${esc(s.name)}"></video>`:`<img src="${esc(m)}" alt="${esc(s.name)}" loading="lazy" decoding="async">`;
+  return scene(s.kind,s.hue,{label:s.name});
+}
+const FAQS=[
+ ["Booking","How do I book a service?","Fill the enquiry form, message us on WhatsApp or call. We confirm your slot within working hours, usually the same day."],
+ ["Booking","Do you offer free pick-up and drop?","Yes, free within 8 km of any branch, driven by our own trained drivers. Supercars and low cars travel on an enclosed flatbed. Beyond 8 km we charge a small fee based on distance."],
+ ["Booking","How long will my car stay with you?","A foam wash takes 2–3 hours, interior cleaning 5–6 hours, ceramic coating 2 days and PPF 3–4 days. We confirm the exact time before we start."],
+ ["Pricing","Why does the price change with car size?","Bigger cars have more paint, glass and cabin to cover, and supercars need extra care around complex body panels. Luxury sedans, SUVs and supercars are priced separately."],
+ ["Pricing","Will there be any hidden charges?","No. You get a written quote on WhatsApp before work starts. If we find something extra, we send photos and ask you first."],
+ ["Pricing","Which payment methods do you accept?","UPI, debit and credit cards, cash and bank transfer. You pay after inspecting the car."],
+ ["Coating & PPF","Ceramic coating or PPF: which should I choose?","Ceramic gives deep gloss and easy cleaning. PPF physically stops stone chips and scratches. Many owners put PPF on the front and ceramic on the rest."],
+ ["Coating & PPF","When can I wash my car after ceramic coating?","Wait 7 days before the first wash. After that, use a pH-neutral shampoo and avoid roadside washers with dirty cloths."],
+ ["Coating & PPF","Does PPF turn yellow over time?","Modern TPU film has an anti-yellowing top coat, and the warranty covers yellowing, cracking and peeling."],
+ ["Workshop","Do you handle insurance claims?","Yes. We work with major insurers for cashless claims and handle the paperwork and surveyor visit for you."],
+ ["Workshop","Do you use genuine parts?","Yes, genuine or OEM-equivalent parts. We show you the old parts when you collect the car."],
+ ["Warranty","What if I'm not happy with the result?","Check the car at handover. If anything isn't right, we fix it on the spot at no cost. Coatings and PPF also carry a written warranty."]
+];
+function faqBlock(full){
+  const list=full?FAQS:FAQS.filter((f,i)=>i%2===0);
+  const cats=["All",...new Set(FAQS.map(f=>f[0]))];
+  return `<section id="faq"><div class="wrap faq-wrap">
+   <aside class="faq-side rv"><span class="eyebrow">FAQ</span><span class="faq-big">${FAQS.length}</span><h2 style="font-size:clamp(1.4rem,2.6vw,2rem)">Frequently asked questions</h2><p>Quick answers about booking, pricing, coatings and warranty. Can't find yours? Ask us directly.</p>
+    <div class="cta-row"><a class="btn wa" target="_blank" rel="noopener" href="${waLink(`Hi ${BRAND.name}, I have a question.`)}">${ICON.wa} Ask on WhatsApp</a><button class="btn" type="button" data-openchat>Chat with us</button></div>
+    ${full?"":`<a class="more" href="#faq-all" style="color:var(--accent);font-weight:600">See all ${FAQS.length} questions →</a>`}</aside>
+   <div class="rv">${full?`<div class="chips" id="faqChips">${cats.map((c,i)=>`<button class="chip${i?"":" on"}" data-cat="${c}">${c}</button>`).join("")}</div>`:""}
+    <div id="faqList">${list.map((f,i)=>`<details data-cat="${f[0]}"${i===0?" open":""}><summary>${f[1]}<span class="pm" aria-hidden="true"></span></summary><div class="faq-a"><small>${f[0]}</small>${f[2]}</div></details>`).join("")}</div></div>
+  </div></section>`;
+}
+function pageFaq(){return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / FAQ</span><h1>Questions, answered</h1><p class="lede">Everything people usually ask before booking. Pick a topic to filter.</p></div>${faqBlock(true)}${bandQuote()}`}
+function svcCard(s){
+  return `<a class="svc rv" href="#service-${s.id}" data-tilt>
+    <div class="svc-media">${visual(s)}${MEDIA[s.id]?"":`<span class="photo-tag">SAMPLE VISUAL</span>`}</div>
+    <div class="svc-body"><span class="eyebrow">${s.cat} · from ${inr(s.from)}${s.unit||""}</span><h3>${s.name}</h3><p>${s.short}</p><span class="more">View service <i>→</i></span></div></a>`;
+}
+function band(title, sub, btns){return `<div class="band"><div class="wrap rv"><div><h3>${title}</h3><p>${sub}</p></div><div class="cta-row">${btns}</div></div></div>`}
+const bandQuote = () => band("Not sure which service your car needs?","Send us two photos on WhatsApp and get a price in 15 minutes.",`<button class="btn primary" data-enquire>Get a free quote</button><a class="btn wa" target="_blank" rel="noopener" href="${waLink(`Hi ${BRAND.name}, I'd like a quote for my car.`)}">${ICON.wa} WhatsApp us</a>`);
+const bandWork = () => band("Work with us","Detailers, painters and mechanics: we're hiring in "+BRAND.city+". Dealers and fleet owners: let's partner.",`<a class="btn primary" target="_blank" rel="noopener" href="${waLink(`Hi ${BRAND.name}, I'd like to work with you / partner with you.`)}">Apply or partner</a><a class="btn ghost" href="#about">About the team</a>`);
+function videosBlock(){
+  const v=[["foam","Snow foam & rinse","Why we never touch the paint with a dry cloth."],["polish","Paint correction","Watch swirl marks disappear panel by panel."],["ceramic","Ceramic coating","Application, curing and the first water test."]];
+  return `<section id="vids"><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Inside the studio</span><h2>See how we work</h2><p class="lede">These play as you scroll to them. Replace each one with the shop's own Reels.</p></div></div>
+  <div class="vids">${v.map(([k,t,d])=>`<div class="vid rv" data-vid="${k}">${VIDEO_FILES[k]?`<video muted loop playsinline preload="auto" disablepictureinpicture>${vidSources(VIDEO_FILES[k])}</video>`:`<canvas></canvas><span class="photo-tag">VIDEO SLOT</span>`}<div class="vbar"><h4>${t}</h4><p>${d}</p><div class="ctl"><button aria-label="Play or pause">${ICON.play}</button><div class="prog"><i></i></div><span class="ts">0:00</span></div></div></div>`).join("")}</div></div></section>`;
+}
+function trustBlock(){
+  const mats=[["Ceramic & graphene coatings","9H hardness, SiO₂-based, certified-installer brands only.","9H · 2–7 yr warranty"],["Paint protection film","Self-healing thermoplastic polyurethane with anti-yellowing top coat.","190 µm TPU · 10 yr"],["Wash chemicals","pH-neutral shampoos and foams that don't strip wax or coatings.","pH 7 · biodegradable"],["Microfiber & tools","Edgeless towels, dual-action polishers and paint depth gauges.","450–500 GSM"]];
+  const steps=[["Check-in with photos","Every panel photographed and logged on your job card."],["Paint depth reading","Measured in microns before any polishing."],["Work under studio lights","Hexagon LED lights show defects the sun hides."],["Quality check","A second detailer inspects every job before handover."],["Handover and warranty","Care guide, warranty card and a reminder for maintenance."]];
+  return `<section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Why people trust us</span><h2>The materials we use and how we work</h2></div></div>
+  <div class="trust"><div class="materials">${mats.map(m=>`<div class="mat rv"><div class="logo-slot">BRAND<br>LOGO</div><div><h4>${m[0]}</h4><p>${m[1]}</p><span class="spec">${m[2]}</span></div></div>`).join("")}</div>
+  <div class="rv"><div class="process">${steps.map(s=>`<div class="step"><div><h4>${s[0]}</h4><p>${s[1]}</p></div></div>`).join("")}</div>
+  <div class="warranty"><span>Written warranty</span><span>Insured studio</span><span>Trained, certified detailers</span><span>Clear bill before work</span></div></div></div></div></section>`;
+}
+function storyBlock(){
+  return `<section><div class="wrap story"><div class="copy rv"><span class="eyebrow">Our story</span><h2>Started in a two-bay garage. Built on word of mouth.</h2>
+  <p>${esc(BRAND.name)} began with two detailers, one polisher and a simple promise: do the job the way we'd want it done on our own car. Most of our customers still come from a friend's recommendation.</p>
+  <p>Today we run a full studio with a dust-controlled coating room, a paint booth and a workshop, but every car still gets checked by a senior detailer before it goes home.</p>
+  <div class="facts"><div class="fact"><b data-count="12000">0</b><span>cars detailed</span></div><div class="fact"><b data-count="8">0</b><span>years in ${esc(BRAND.city)}</span></div><div class="fact"><b data-count="${BRANCHES.length}">0</b><span>branches</span></div><div class="fact"><b>4.9 / 5</b><span>average rating</span></div></div>
+  <div class="cta-row" style="margin-top:6px"><a class="btn" href="#about">More about us</a></div></div>
+  <div class="story-art rv" data-tilt="7">${MEDIA.graphene?`<img src="${MEDIA.graphene}" alt="Luxury SUV in our detailing studio">`:`${scene("gloss",220,{label:"Studio with hexagon lights"})}<span class="photo-tag">PHOTO</span>`}</div></div></section>`;
+}
+function fleetBlock(){
+  return `<section id="book"><div class="wrap fleet"><div class="rv"><span class="eyebrow">Book an appointment</span><h2 style="margin:12px 0 14px">Got more than one car?</h2>
+  <p class="lede">Families with more than one car, corporate fleets and luxury dealerships get a dedicated manager and better pricing. Tell us how many cars, and we'll plan the slots.</p>
+  <div class="tiers"><div class="tier"><span>2–4 cars</span><b>5% off</b></div><div class="tier"><span>5–14 cars</span><b>10% off</b></div><div class="tier"><span>15+ cars</span><b>15% off + on-site</b></div></div></div>
+  <form class="card form rv" id="fleetForm" novalidate>
+    <div class="row2"><label class="f">Your name<input id="fl-name" required placeholder="Full name"></label><label class="f">Phone<input id="fl-phone" required inputmode="tel" placeholder="10-digit mobile"></label></div>
+    <div class="row2"><label class="f">Company (optional)<input id="fl-co" placeholder="Company or fleet name"></label>
+      <label class="f">Number of cars<div class="stepper"><button type="button" data-st="-1" aria-label="Fewer cars">−</button><input id="fl-n" type="number" min="1" max="500" value="5"><button type="button" data-st="1" aria-label="More cars">+</button></div></label></div>
+    <div class="row2"><label class="f">Service<select id="fl-svc">${SERVICES.map(s=>`<option value="${s.id}">${s.name}</option>`).join("")}</select></label>
+      <label class="f">Branch<select id="fl-br">${BRANCHES.map(b=>`<option>${b.area}</option>`).join("")}</select></label></div>
+    <label class="f">Preferred date<input id="fl-date" type="date"></label>
+    <div class="est"><span>Estimated starting total</span><b id="fl-est">—</b></div>
+    <p class="err" id="fl-err"></p>
+    <button class="btn primary" type="submit">Request appointment</button>
+  </form></div></section>`;
+}
+function contactBlock(){
+  return `<section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Contact</span><h2>Talk to a real person</h2><p class="lede">Call, WhatsApp or drop in. We reply to every message within working hours.</p></div><button class="btn primary" data-enquire>Send an enquiry</button></div>
+  <div class="contact-grid">
+   <div class="cbox rv"><span class="eyebrow">Call</span><span class="big">${esc(BRAND.phone)}</span><p>Mon–Sat, 9:30 am – 8 pm</p><div class="cta-row"><a class="btn" href="tel:${BRAND.phone.replace(/\s/g,"")}">${ICON.phone} Call</a><button class="copy-btn" data-copy="${esc(BRAND.phone)}">Copy</button></div></div>
+   <div class="cbox rv"><span class="eyebrow">WhatsApp</span><span class="big">Photos, quotes, bookings</span><p>Fastest way to get a price.</p><a class="btn wa" target="_blank" rel="noopener" href="${waLink(`Hi ${BRAND.name}!`)}">${ICON.wa} Open chat</a></div>
+   <div class="cbox rv"><span class="eyebrow">Email</span><span class="big">${esc(BRAND.email)}</span><p>For fleet, dealer and insurance enquiries.</p><button class="copy-btn" data-copy="${esc(BRAND.email)}">Copy email</button></div>
+   <div class="cbox rv"><span class="eyebrow">Visit</span><span class="big">${BRANCHES[0].area}, ${esc(BRAND.city)}</span><p>${BRANCHES[0].addr}</p><a class="btn" href="#branches">All ${BRANCHES.length} branches</a></div>
+  </div></div></section>`;
+}
+function reviewsBlock(){
+  return `<section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Reviews</span><h2>What customers say</h2></div><span class="sample-note">SAMPLE REVIEWS · REPLACE WITH THE SHOP'S GOOGLE REVIEWS</span></div>
+  <div class="revs">${REVIEWS.map(r=>`<div class="rev"><span class="stars">★★★★★</span><p>“${r[2]}”</p><div class="who"><span class="avatar">${r[0].split(" ").map(w=>w[0]).join("")}</span><div><b>${r[0]}</b><small>${r[1]}</small></div></div></div>`).join("")}</div></div></section>`;
+}
+function postCard(p){return `<a class="post rv" href="#post-${p.id}"><div class="pm">${postVis(p)}</div><div class="pb"><span class="meta">${p.date} · ${p.read} read</span><h3>${p.title}</h3><p>${p.ex}</p></div></a>`}
+function blogBlock(n=3){return `<section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">From the blog</span><h2>Car care, explained</h2></div><a class="btn" href="#blog">All posts</a></div><div class="posts">${POSTS.slice(0,n).map(postCard).join("")}</div></div></section>`}
+
+/* ================= PAGES ================= */
+function pageHome(){
+  const slides=[["foam",205,"Snow foam wash","foam-wash"],["beads",214,"Ceramic coating","ceramic"],["polish",2,"Paint correction","paint-correction"],["film",165,"Paint protection film","ppf"]];
+  return `
+  ${heroBlock()}
+  <div class="wrap welcome">
+    <div class="copy rv"><span class="eyebrow">Welcome</span><h2>Your car deserves better than a roadside wash.</h2>
+      <p class="lede">From a weekly foam wash to full paint protection film, everything happens in our own studio under detailing lights, by people who've done it thousands of times. Book online, drop your car or get free pick-up, and get it back with photos of every step.</p>
+      <div class="cta-row"><button class="btn primary" data-enquire>Book a service</button><a class="btn" href="#services">Explore services</a></div>
+      <div class="stats"><div><b data-count="12000">0</b><span>cars detailed</span></div><div><b data-count="${BRANCHES.length}">0</b><span>studios in ${esc(BRAND.city)}</span></div><div><b>4.9</b><span>Google rating</span></div></div></div>
+    <div class="slides rv" id="slides" data-tilt="6">${slides.map((s,i)=>`<div class="sl${i?"":" on"}">${MEDIA[s[3]]?`<img src="${MEDIA[s[3]]}" alt="${s[2]}">`:scene(s[0],s[1],{label:s[2]})}</div>`).join("")}
+      <div class="cap"><b id="slideCap">${slides[0][2]}</b><div class="dots">${slides.map((s,i)=>`<button aria-label="Show ${s[2]}" data-cap="${s[2]}" class="${i?"":"on"}"></button>`).join("")}</div></div>${MEDIA["foam-wash"]?"":`<span class="photo-tag">PHOTO SLIDESHOW</span>`}</div>
+  </div>
+  <section style="padding-top:20px"><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Services</span><h2>What we do best</h2><p class="lede">Tap any service to see what's included, the process and prices for your car size.</p></div><a class="btn" href="#services">All ${SERVICES.length} services</a></div>
+  <div class="grid-svc">${SERVICES.slice(0,6).map(svcCard).join("")}</div></div></section>
+  ${bandQuote()}
+  ${storyBlock()}
+  ${videosBlock()}
+  ${trustBlock()}
+  ${bandWork()}
+  ${fleetBlock()}
+  ${contactBlock()}
+  ${reviewsBlock()}
+  ${faqBlock(false)}
+  ${blogBlock(3)}`;
+}
+function pageServices(){
+  const cats=["All",...new Set(SERVICES.map(s=>s.cat))];
+  return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / Services</span><h1>Every service, under one roof</h1><p class="lede">Detailing, protection, styling and workshop work. Pick a category or tap a service for full details and pricing.</p>
+  <div class="chips" id="catChips">${cats.map((c,i)=>`<button class="chip${i?"":" on"}" data-cat="${c}">${c}</button>`).join("")}</div></div>
+  <section style="padding-top:0"><div class="wrap"><div class="grid-svc" id="allSvc">${SERVICES.map(svcCard).join("")}</div></div></section>
+  ${bandQuote()}
+  <section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Service areas</span><h2>Available at ${BRANCHES.length} studios</h2></div><a class="btn" href="#branches">See branches</a></div>
+  <div class="contact-grid">${BRANCHES.map(b=>`<a class="cbox rv" href="#branch-${b.id}"><span class="eyebrow">${b.name}</span><span class="big">${b.area}</span><p>${b.tags.join(" · ")}</p></a>`).join("")}</div></div></section>
+  ${fleetBlock()}`;
+}
+function pageService(id){
+  const s=svcById(id); if(!s) return pageServices();
+  const mult=[["Luxury Sedan",1,"BMW 5 Series, Mercedes E-Class, Audi A6"],["Luxury SUV",1.35,"BMW X5, Mercedes GLE, Range Rover, Cayenne"],["Supercar / Ultra-luxury",1.9,"Porsche 911, Urus, Ferrari, Rolls-Royce"]];
+  const others=SERVICES.filter(x=>x.id!==s.id&&x.cat===s.cat).concat(SERVICES.filter(x=>x.cat!==s.cat)).slice(0,3);
+  const faqs=[[`How long does ${s.name.toLowerCase()} take?`,`Usually ${s.time}. We confirm the exact time after seeing your car, and you get WhatsApp updates while we work.`],["Do you offer pick-up and drop?",`Yes, free within 8 km of any of our ${BRANCHES.length} branches in ${BRAND.city}.`],["Is there a warranty?",s.warranty==="—"?"This service has no long-term warranty, but if anything isn't right when you collect the car, we redo it on the spot.":`Yes, ${s.warranty.toLowerCase()}, with a written warranty card.`],["How do I pay?","UPI, cards, cash or bank transfer, after you've inspected the car."]];
+  return `<div class="wrap phead"><span class="crumbs rv"><a href="#home">Home</a> / <a href="#services">Services</a> / ${s.name}</span></div>
+  <div class="wrap sd-hero"><div class="media rv" data-tilt="6">${visual(s)}${MEDIA[s.id]?"":`<span class="photo-tag">SAMPLE VISUAL</span>`}</div>
+   <div class="rv" style="display:grid;gap:18px"><span class="eyebrow">${s.cat}</span><h1 style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800">${s.name}</h1><p class="lede">${s.short}</p>
+   <div class="specs"><div><b>${inr(s.from)}</b><span>starting ${s.unit||""}</span></div><div><b>${s.time}</b><span>time needed</span></div><div><b>${s.warranty}</b><span>warranty</span></div></div>
+   <div class="cta-row"><button class="btn primary" data-enquire="${s.id}">Book this service</button><a class="btn wa" target="_blank" rel="noopener" href="${waLink(`Hi ${BRAND.name}, I'd like to know more about ${s.name}.`)}">${ICON.wa} Ask on WhatsApp</a></div></div></div>
+  <section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Before / after</span><h2>Drag to compare</h2></div></div>
+   <div class="ba rv" style="--p:50%">${MEDIA[s.id]?`<div class="layer dullimg">${visual(s)}</div><div class="layer after">${visual(s)}</div>`:`<div class="layer">${scene(s.kind==="interior"?"gloss":s.kind,s.hue,{dull:true,label:"Before"})}</div><div class="layer after">${scene(s.kind,s.hue,{label:"After"})}</div>`}<span class="lbl" style="left:14px">BEFORE</span><span class="lbl" style="right:14px">AFTER</span><div class="handle"></div><input type="range" min="0" max="100" value="50" aria-label="Compare before and after"></div></div></section>
+  <section style="padding-top:0"><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">What's included</span><h2>Everything in this service</h2></div></div>
+   <div class="incl">${s.inc.map(i=>`<div class="rv">${ICON.check}<span>${i}</span></div>`).join("")}</div></div></section>
+  <section style="padding-top:0"><div class="wrap trust"><div class="rv"><span class="eyebrow">The process</span><h2 style="margin:12px 0 20px">How we do it</h2><div class="process">${s.steps.map(x=>`<div class="step"><div><h4>${x[0]}</h4><p>${x[1]}</p></div></div>`).join("")}</div></div>
+   <div class="rv"><span class="eyebrow">Questions</span><h2 style="margin:12px 0 8px">Good to know</h2><div class="faq">${faqs.map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("")}</div></div></div></section>
+  <section style="padding-top:0"><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Pricing</span><h2>Price by car size</h2><p class="lede">Starting prices. Final price depends on your car's condition, confirmed before we start.</p></div></div>
+   <div class="pk">${mult.map((m,i)=>`<div class="pkg rv${i===1?" hot":""}"><span class="eyebrow">${m[0]}</span><span class="price">${inr(Math.round(s.from*m[1]/100)*100-1)}</span><ul><li>${m[2]}</li><li>${s.time}</li><li>${s.warranty==="—"?"Satisfaction check at handover":s.warranty+" warranty"}</li></ul><button class="btn${i===1?" primary":""}" data-enquire="${s.id}">Book ${m[0].split(" /")[0]}</button></div>`).join("")}</div></div></section>
+  ${bandQuote()}
+  <section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Also popular</span><h2>You might also like</h2></div></div><div class="grid-svc">${others.map(svcCard).join("")}</div></div></section>`;
+}
+function branchCard(b,i){
+  return `<div class="br rv" data-tilt="4"><div class="map">${mapSVG(i+3)}</div><div class="bb"><span class="eyebrow">${b.name}</span><h3 style="font-size:1.5rem">${b.area}</h3><p>${b.note}</p><p>${b.addr}</p><p class="mono" style="font-size:.82rem">${b.hours} · ${b.bays} bays</p><div class="tags">${b.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+  <div class="cta-row"><a class="btn primary" href="#branch-${b.id}">View branch</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${encodeURIComponent(b.area+", "+BRAND.city)}">Directions</a></div></div></div>`;
+}
+function pageBranches(){
+  return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / Branches</span><h1>${BRANCHES.length} studios across ${esc(BRAND.city)}</h1><p class="lede">Same standards, same team training, same warranty at every branch. Pick the one closest to you.</p></div>
+  <section style="padding-top:0"><div class="wrap branches">${BRANCHES.map(branchCard).join("")}</div></section>${bandQuote()}${contactBlock()}`;
+}
+function pageBranch(id){
+  const b=BRANCHES.find(x=>x.id===id); if(!b) return pageBranches();
+  const i=BRANCHES.indexOf(b);
+  const here=SERVICES.filter(s=>b.tags.some(t=>t.includes(s.cat)||s.name.includes(t.split(" ")[0]))||s.cat==="Detailing");
+  return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / <a href="#branches">Branches</a> / ${b.area}</span><h1>${b.area}</h1><p class="lede">${b.note}</p></div>
+  <div class="wrap"><div class="br rv" data-tilt="4"><div class="map">${mapSVG(i+3)}</div><div class="bb"><span class="eyebrow">${b.name}</span><p>${b.addr}</p><p class="mono" style="font-size:.82rem">${b.hours}</p><p>${b.bays} working bays</p><div class="tags">${b.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+  <div class="cta-row"><button class="btn primary" data-enquire>Book at this branch</button><a class="btn wa" target="_blank" rel="noopener" href="${waLink(`Hi ${BRAND.name} ${b.area}, I'd like to book a slot.`)}">${ICON.wa} WhatsApp branch</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${encodeURIComponent(b.area+", "+BRAND.city)}">Directions</a></div></div></div></div>
+  <section><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">At this branch</span><h2>Services available in ${b.area}</h2></div></div><div class="grid-svc">${here.map(svcCard).join("")}</div></div></section>
+  <section style="padding-top:0"><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">Other branches</span><h2>Also near you</h2></div></div><div class="branches">${BRANCHES.filter(x=>x!==b).map((x)=>branchCard(x,BRANCHES.indexOf(x))).join("")}</div></div></section>`;
+}
+function pageAbout(){
+  return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / About us</span><h1>About ${esc(BRAND.name)}</h1><p class="lede">${esc(BRAND.intro)}</p></div>
+  ${storyBlock()}
+  <section style="padding-top:0"><div class="wrap"><div class="sec-head rv"><div><span class="eyebrow">What we stand for</span><h2>Three rules we don't break</h2></div></div>
+  <div class="values"><div class="val rv"><h3>Show, then charge</h3><p>You see photos, readings and a quote on WhatsApp before any work starts. No surprise bills.</p></div><div class="val rv"><h3>Measure, don't guess</h3><p>Paint depth gauges, gloss meters and checklists, so results don't depend on who's on shift.</p></div><div class="val rv"><h3>Treat it like ours</h3><p>Seat covers, floor mats and steering covers go on before anyone gets in your car.</p></div></div></div></section>
+  ${videosBlock()}
+  <section><div class="wrap trust"><div class="rv"><span class="eyebrow">Journey</span><h2 style="margin:12px 0 24px">How we got here</h2><div class="timeline">
+   <div class="tl"><b>2018</b><h4>Two bays, one polisher</h4><p>Started with washes and interior cleaning in ${BRANCHES[0].area}.</p></div>
+   <div class="tl"><b>2020</b><h4>Coating room opens</h4><p>Dust-controlled room and IR curing for ceramic coatings.</p></div>
+   <div class="tl"><b>2022</b><h4>PPF and paint booth</h4><p>Certified PPF installers join; paint booth added for denting and painting.</p></div>
+   <div class="tl"><b>2025</b><h4>New branches</h4><p>Opened in ${BRANCHES.slice(1).map(b=>b.area).join(" and ")}.</p></div></div></div>
+  <div class="rv"><span class="eyebrow">The team</span><h2 style="margin:12px 0 24px">People behind the shine</h2><div class="team">
+   ${[["Founder","Owner & head detailer"],["Studio Manager","Bookings and customer care"],["PPF Lead","Certified film installer"],["Workshop Head","Mechanical and body shop"]].map(t=>`<div class="mem"><span class="avatar">${t[0].split(" ").map(w=>w[0]).join("")}</span><b>${t[0]}</b><span>${t[1]}</span></div>`).join("")}</div><p class="sample-note" style="margin-top:12px">ADD REAL NAMES AND PHOTOS</p></div></div></section>
+  ${bandWork()}${reviewsBlock()}`;
+}
+function pageContact(){
+  return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / Contact</span><h1>Contact us</h1><p class="lede">Ask anything about your car. Fill the form and send it straight to our WhatsApp or Gmail.</p></div>
+  <section style="padding-top:0"><div class="wrap fleet"><div class="card rv" style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px)">${enquiryForm("pg")}</div>
+  <div style="display:grid;gap:16px"><div class="cbox rv"><span class="eyebrow">Call</span><span class="big">${esc(BRAND.phone)}</span><button class="copy-btn" data-copy="${esc(BRAND.phone)}">Copy number</button></div><div class="cbox rv"><span class="eyebrow">Email</span><span class="big">${esc(BRAND.email)}</span><button class="copy-btn" data-copy="${esc(BRAND.email)}">Copy email</button></div>
+  ${BRANCHES.map(b=>`<a class="cbox rv" href="#branch-${b.id}"><span class="eyebrow">${b.name}</span><span class="big">${b.area}</span><p>${b.hours}</p></a>`).join("")}</div></div></section>${faqBlock(false)}${fleetBlock()}`;
+}
+function pageBlog(){return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / Blog</span><h1>Car care, explained</h1><p class="lede">Plain-language guides from our detailers.</p></div><section style="padding-top:0"><div class="wrap"><div class="posts">${POSTS.map(postCard).join("")}</div></div></section>`}
+function pagePost(id){
+  const p=POSTS.find(x=>x.id===id); if(!p) return pageBlog();
+  return `<div class="wrap phead rv"><span class="crumbs"><a href="#home">Home</a> / <a href="#blog">Blog</a></span><span class="meta mono" style="color:var(--cool)">${p.date} · ${p.read} read</span><h1 style="font-size:clamp(1.8rem,4vw,3rem);max-width:22ch">${p.title}</h1></div>
+  <div class="wrap"><article class="article rv"><div class="cover">${postVis(p)}</div>${p.body.map(b=>(b[0]?`<h3>${b[0]}</h3>`:"")+`<p>${b[1]}</p>`).join("")}<div class="cta-row"><button class="btn primary" data-enquire>Ask our team</button><a class="btn" href="#blog">More posts</a></div></article></div>
+  ${blogBlock(3)}`;
+}
+
+/* ================= FOOTER ================= */
+function renderChrome(){
+  document.documentElement.style.setProperty("--accent",BRAND.accent);
+  $("#hdrLogo").innerHTML=markSVG(34)+`<span>${esc(BRAND.name)}</span>`;
+  $("#fabWa").href=waLink(`Hi ${BRAND.name}, I have a question about my car.`);
+  $("#fabWa").innerHTML=ICON.wa;
+  $("#foot").innerHTML=`<div class="wrap fgrid"><div><a class="logo" href="#home">${markSVG(34)}<span>${esc(BRAND.name)}</span></a><p>${esc(BRAND.tagline)} in ${esc(BRAND.city)}. ${BRANCHES.length} studios, one standard.</p></div>
+  <div><h4>Services</h4><ul>${SERVICES.slice(0,6).map(s=>`<li><a href="#service-${s.id}">${s.name}</a></li>`).join("")}</ul></div>
+  <div><h4>Company</h4><ul><li><a href="#about">About us</a></li><li><a href="#branches">Branches</a></li><li><a href="#blog">Blog</a></li><li><a href="#faq-all">FAQ</a></li><li><a href="#contact">Contact us</a></li></ul></div>
+  <div><h4>Reach us</h4><ul><li>${esc(BRAND.phone)}</li><li style="word-break:break-all">${esc(BRAND.email)}</li><li>${BRANCHES.map(b=>b.area).join(" · ")}</li></ul></div></div>
+  <div class="wrap" style="margin-top:36px;color:var(--mute);font-size:.82rem">© 2026 ${esc(BRAND.name)}. All rights reserved.</div>`;
+}
+
+/* ================= ENQUIRY MODAL ================= */
+function enquiryForm(p, pre=""){
+  return `<form class="form" id="${p}-form" novalidate data-enq="${p}">
+   <div class="row2"><label class="f">Name<input id="${p}-name" required placeholder="Your name" autocomplete="name"></label><label class="f">Phone number<input id="${p}-phone" required inputmode="tel" placeholder="10-digit mobile" autocomplete="tel"></label></div>
+   <label class="f">Email<input id="${p}-email" type="email" placeholder="you@gmail.com" autocomplete="email"></label>
+   <label class="f">Service<select id="${p}-svc" required><option value="">Choose a service</option>${SERVICES.map(s=>`<option value="${s.id}"${s.id===pre?" selected":""}>${s.name}</option>`).join("")}<option value="other">Something else</option></select></label>
+   <label class="f">Describe your project<textarea id="${p}-msg" placeholder="Car model, year, colour and what you'd like done. e.g. 2023 BMW X5, black, swirl marks and ceramic coating"></textarea></label>
+   <p class="err" id="${p}-err"></p>
+   <button class="btn primary" type="submit">Send enquiry</button></form><div id="${p}-done" hidden></div>`;
+}
+function openEnquiry(pre=""){
+  $("#modalMount").innerHTML=`<div class="modal" id="enqModal" role="dialog" aria-modal="true" aria-labelledby="enqT"><div class="mbox">
+   <button class="mx" id="mx" aria-label="Close and view website">×</button>
+   <div class="mtop"><span class="eyebrow">Free quote · reply in 15 min</span><h3 id="enqT">What can we do for your car?</h3><p>Tell us a little and we'll get back with a price. Or close this to explore the website.</p></div>
+   <div class="mbody">${enquiryForm("md",pre)}</div>
+   <div class="mfoot"><div><small>Call us</small><a href="tel:${BRAND.phone.replace(/\s/g,"")}">${esc(BRAND.phone)}</a></div><div><small>Contact</small><a target="_blank" rel="noopener" href="${waLink(`Hi ${BRAND.name}!`)}">WhatsApp chat</a><span style="color:var(--mute);font-size:.84rem;word-break:break-all">${esc(BRAND.email)}</span></div></div>
+  </div></div>`;
+  const m=$("#enqModal");
+  const close=()=>{$("#modalMount").innerHTML="";document.removeEventListener("keydown",esc_)};
+  const esc_=e=>{if(e.key==="Escape")close()};
+  document.addEventListener("keydown",esc_);
+  $("#mx").onclick=close; m.addEventListener("click",e=>{if(e.target===m)close()});
+  setTimeout(()=>{const n=$("#md-name");n&&n.focus({preventScroll:true})},350);
+}
+function handleEnquiry(form){
+  const p=form.dataset.enq, v=k=>$(`#${p}-${k}`).value.trim();
+  $$(".f",form).forEach(f=>f.classList.remove("bad"));
+  const errs=[];
+  if(!v("name")){errs.push("your name");$(`#${p}-name`).parentElement.classList.add("bad")}
+  if(!/^(\+?91)?[6-9]\d{9}$/.test(v("phone").replace(/[\s-]/g,""))){errs.push("a valid 10-digit mobile number");$(`#${p}-phone`).parentElement.classList.add("bad")}
+  if(v("email")&&!/^\S+@\S+\.\S+$/.test(v("email"))){errs.push("a valid email");$(`#${p}-email`).parentElement.classList.add("bad")}
+  if(!v("svc")){errs.push("a service");$(`#${p}-svc`).parentElement.classList.add("bad")}
+  if(errs.length){$(`#${p}-err`).textContent="Please add "+errs.join(", ")+".";return}
+  const svc=v("svc")==="other"?"Something else":svcById(v("svc")).name;
+  const text=`New enquiry from website\n\nName: ${v("name")}\nPhone: ${v("phone")}\nEmail: ${v("email")||"-"}\nService: ${svc}\nDetails: ${v("msg")||"-"}`;
+  form.hidden=true;
+  const d=$(`#${p}-done`); d.hidden=false;
+  d.innerHTML=`<div class="sent"><div class="tick">${ICON.check}</div><h3>Almost done, ${esc(v("name").split(" ")[0])}</h3><p style="color:var(--mute)">Choose how to send it. Your message is ready to go.</p><pre>${esc(text)}</pre>
+   <div class="cta-row"><a class="btn wa" target="_blank" rel="noopener" href="${waLink(text)}">${ICON.wa} Send on WhatsApp</a><a class="btn" target="_blank" rel="noopener" href="${gmailLink("Website enquiry: "+svc+" – "+v("name"),text)}">${ICON.mail} Send by Gmail</a></div>
+   <button class="copy-btn" data-copy="${esc(text)}">Copy message</button></div>`;
+}
+
+/* ================= FLEET ================= */
+function initFleet(){
+  const f=$("#fleetForm"); if(!f) return;
+  const n=$("#fl-n"), est=$("#fl-est"), svc=$("#fl-svc");
+  const calc=()=>{const c=Math.max(1,Math.min(500,parseInt(n.value)||1)), s=svcById(svc.value), d=c>=15?.15:c>=5?.10:c>=2?.05:0;est.textContent=inr(s.from*c*(1-d))+(d?` (${d*100}% off)`:"")};
+  $$("[data-st]",f).forEach(b=>b.onclick=()=>{n.value=Math.max(1,(parseInt(n.value)||1)+ +b.dataset.st);calc()});
+  n.oninput=calc; svc.onchange=calc; calc();
+  try{const t=new Date(Date.now()+2*864e5);$("#fl-date").value=t.toISOString().slice(0,10)}catch(e){}
+  f.onsubmit=e=>{e.preventDefault();
+    const name=$("#fl-name").value.trim(), ph=$("#fl-phone").value.replace(/[\s-]/g,"");
+    if(!name||!/^(\+?91)?[6-9]\d{9}$/.test(ph)){$("#fl-err").textContent="Please add your name and a valid 10-digit mobile number.";return}
+    const text=`Appointment request (multiple cars)\n\nName: ${name}\nPhone: ${ph}\nCompany: ${$("#fl-co").value||"-"}\nCars: ${n.value}\nService: ${svcById(svc.value).name}\nBranch: ${$("#fl-br").value}\nPreferred date: ${$("#fl-date").value||"-"}\nEstimate shown: ${est.textContent}`;
+    f.innerHTML=`<div class="sent"><div class="tick">${ICON.check}</div><h3>Request ready</h3><pre>${esc(text)}</pre><div class="cta-row"><a class="btn wa" target="_blank" rel="noopener" href="${waLink(text)}">${ICON.wa} Send on WhatsApp</a><a class="btn" target="_blank" rel="noopener" href="${gmailLink("Fleet appointment – "+name,text)}">${ICON.mail} Send by Gmail</a></div></div>`;
+  };
+}
+
+/* ================= VIDEO (animated stand-ins) ================= */
+const carPath=new Path2D(CAR), w1=new Path2D(WIN1), w2=new Path2D(WIN2);
+const VIDS=[];
+function initVideos(){
+  $$("[data-vid]").forEach(el=>{
+    const vEl=$("video",el);
+    if(vEl){const btn=$("button",el),bar=$(".prog i",el),ts=$(".ts",el),V={el,video:vEl,user:null,playing:false,size(){}};
+      vEl.addEventListener("timeupdate",()=>{const d=vEl.duration||8;bar.style.width=(vEl.currentTime/d*100).toFixed(1)+"%";ts.textContent=`0:${String(Math.floor(vEl.currentTime)).padStart(2,"0")} / 0:${String(Math.round(d)).padStart(2,"0")}`});
+      btn.onclick=()=>{V.user=!V.playing;V.playing?pause(V):play(V)};VIDS.push(V);return}
+    const cv=$("canvas",el), ctx=cv.getContext("2d"), kind=el.dataset.vid, btn=$("button",el), bar=$(".prog i",el), ts=$(".ts",el);
+    const V={el,cv,ctx,kind,t:0,playing:false,user:null,last:0,dur:14,seed:rng(kind.length*77)};
+    const parts=Array.from({length:140},()=>({x:V.seed(),y:V.seed(),r:V.seed(),v:V.seed()}));
+    V.parts=parts;
+    const size=()=>{const w=cv.clientWidth||300,h=cv.clientHeight||400,d=Math.min(2,window.devicePixelRatio||1);cv.width=w*d;cv.height=h*d;draw(V)};
+    V.size=size; size();
+    btn.onclick=()=>{V.user=!V.playing;V.playing?pause(V):play(V)};
+    VIDS.push(V);
+  });
+  if(!VIDS.length) return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{const V=VIDS.find(v=>v.el===e.target);if(!V)return;if(e.intersectionRatio>.5&&V.user!==false)play(V);else if(e.intersectionRatio<.2)pause(V)}),{threshold:[0,.2,.5,.8]});
+  VIDS.forEach(V=>io.observe(V.el));
+}
+function play(V){if(V.playing)return;if(V.video){V.playing=true;V.video.play().catch(()=>{});$("button",V.el).innerHTML=ICON.pause;return}V.playing=true;$("button",V.el).innerHTML=ICON.pause;V.last=performance.now();const loop=now=>{if(!V.playing)return;V.t=(V.t+(now-V.last)/1000)%V.dur;V.last=now;draw(V);requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+function pause(V){if(V.video)V.video.pause();V.playing=false;$("button",V.el).innerHTML=ICON.play}
+function draw(V){
+  const {ctx,cv,kind,t,dur,parts}=V, W=cv.width,H=cv.height, p=t/dur;
+  ctx.setTransform(1,0,0,1,0,0);
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#1d2a34");g.addColorStop(.62,"#0f171d");g.addColorStop(1,"#070a0d");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const s=W/560, ox=(W-800*s)/2, oy=H*.52-300*s;
+  // hex lights
+  ctx.save();ctx.strokeStyle="rgba(233,242,247,.55)";ctx.lineWidth=2.4*s*1.4;
+  for(let row=0;row<4;row++)for(let c=0;c<10;c++){const x=c*66*s*.85+(row%2?28*s:0),y=30*s+row*34*s;ctx.globalAlpha=.8-row*.18;ctx.beginPath();for(let i=0;i<7;i++){const a=Math.PI/3*i;ctx[i?"lineTo":"moveTo"](x+20*s*Math.cos(a),y+20*s*Math.sin(a))}ctx.stroke()}
+  ctx.restore();
+  ctx.fillStyle="#0a1014";ctx.fillRect(0,oy+395*s,W,H);
+  ctx.save();ctx.translate(ox,oy);ctx.scale(s,s);
+  const sh=ctx.createRadialGradient(415,402,10,415,402,380);sh.addColorStop(0,"rgba(0,0,0,.75)");sh.addColorStop(1,"rgba(0,0,0,0)");ctx.fillStyle=sh;ctx.save();ctx.scale(1,.07);ctx.beginPath();ctx.arc(415,402/.07,380,0,7);ctx.fill();ctx.restore();
+  const hue=kind==="foam"?205:kind==="polish"?0:214;
+  const dull=kind==="polish"?Math.max(0,1-p*1.3):0;
+  const pg=ctx.createLinearGradient(0,200,0,360);pg.addColorStop(0,`hsl(${hue} ${58-dull*40}% ${60-dull*18}%)`);pg.addColorStop(.5,`hsl(${hue} ${58-dull*40}% 32%)`);pg.addColorStop(1,`hsl(${hue} 50% 12%)`);
+  ctx.fillStyle=pg;ctx.fill(carPath);
+  ctx.save();ctx.clip(carPath);
+  // moving light sweep
+  const lx=-200+((p*1.6)%1)*1300;ctx.fillStyle="rgba(255,255,255,.14)";ctx.beginPath();ctx.moveTo(lx,190);ctx.lineTo(lx+50,190);ctx.lineTo(lx-90,380);ctx.lineTo(lx-140,380);ctx.fill();
+  ctx.strokeStyle="rgba(255,255,255,.45)";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(60,292);ctx.quadraticCurveTo(420,262,760,296);ctx.stroke();
+  if(kind==="foam"){
+    const foamUp=Math.min(1,p/.45), rinse=p<.5?-1:(p-.5)/.3*900;
+    parts.forEach((q,i)=>{const x=90+q.x*660,y=210+q.y*150;if(i/parts.length>foamUp)return;if(x<rinse-60)return;ctx.fillStyle="rgba(245,248,250,.92)";ctx.beginPath();ctx.arc(x,y+Math.sin(t*2+i)*1.5,7+q.r*16,0,7);ctx.fill()});
+    if(p>.5&&p<.82){for(let i=0;i<26;i++){const x=rinse-80+i*4;ctx.strokeStyle="rgba(170,215,240,.5)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,190);ctx.lineTo(x-20,380);ctx.stroke()}}
+  }
+  if(kind==="polish"){
+    const px=90+p*700, py=300+Math.sin(t*3)*35;
+    parts.forEach((q,i)=>{const x=90+q.x*660,y=205+q.y*150;if(x<px-40)return;ctx.strokeStyle="rgba(255,255,255,.22)";ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,8+q.r*26,0,7);ctx.stroke()});
+    V.px=px;V.py=py;
+  }
+  if(kind==="ceramic"){
+    const coat=Math.min(1,p/.4)*820;
+    if(p<.42){ctx.fillStyle="rgba(150,200,255,.12)";ctx.fillRect(60,190,coat,200)}
+    if(p>.45){parts.forEach((q,i)=>{const appear=(p-.45)/.5;if(i/parts.length>appear)return;const x=90+q.x*660,y=210+q.y*150+Math.max(0,(p-.75))*q.v*200,rr=2+q.r*5;ctx.fillStyle="rgba(255,255,255,.5)";ctx.beginPath();ctx.arc(x,y,rr,0,7);ctx.fill();ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(x-rr*.3,y-rr*.35,rr*.35,0,7);ctx.fill()})}
+  }
+  ctx.restore();
+  ctx.fillStyle="#0a1117";ctx.fill(w1);ctx.fill(w2);
+  ctx.fillStyle="#f4f1e6";ctx.beginPath();ctx.moveTo(722,296);ctx.lineTo(746,304);ctx.lineTo(746,318);ctx.lineTo(716,312);ctx.fill();
+  [245,635].forEach(cx=>{ctx.fillStyle="#07090b";ctx.beginPath();ctx.arc(cx,360,46,0,7);ctx.fill();ctx.fillStyle="#2b343c";ctx.beginPath();ctx.arc(cx,360,31,0,7);ctx.fill();ctx.strokeStyle="#aeb9c1";ctx.lineWidth=6;ctx.lineCap="round";const rot=kind==="foam"&&p>.85?t*4:0;for(let k=0;k<5;k++){const a=k*1.2566+rot;ctx.beginPath();ctx.moveTo(cx,360);ctx.lineTo(cx+28*Math.cos(a),360+28*Math.sin(a));ctx.stroke()}ctx.fillStyle="#d6dde2";ctx.beginPath();ctx.arc(cx,360,8,0,7);ctx.fill()});
+  if(kind==="polish"){const {px,py}=V;ctx.fillStyle="#f2c96f";ctx.beginPath();ctx.arc(px,py,40,0,7);ctx.fill();ctx.save();ctx.translate(px,py);ctx.rotate(t*18);ctx.fillStyle="#1b1b1b";ctx.fillRect(-26,-4,52,8);ctx.restore();ctx.fillStyle="#353c43";ctx.fillRect(px-14,py-110,28,74);ctx.fillRect(px-55,py-128,110,26)}
+  if(kind==="ceramic"&&p<.42){const ax=60+Math.min(1,p/.4)*820, ay=250+Math.sin(t*5)*40;ctx.fillStyle="#e8edf0";ctx.fillRect(ax-30,ay-14,60,28);ctx.fillStyle="#3b6b8c";ctx.fillRect(ax-30,ay+8,60,8)}
+  ctx.restore();
+  // HUD
+  ctx.font=`${12*s*1.25}px JetBrains Mono, monospace`;ctx.fillStyle="rgba(0,0,0,.55)";
+  const hud=kind==="polish"?`GLOSS ${Math.round(48+43*Math.min(1,p*1.3))} GU · DEPTH 118 µm`:kind==="ceramic"?(p<.42?"APPLYING · PANEL "+(1+Math.floor(p/.42*8)):"WATER TEST · 9H"):(p<.5?"SNOW FOAM · DWELL 5 MIN":p<.82?"RINSE · LOW PRESSURE":"DONE · SPOTLESS");
+  const tw=ctx.measureText(hud).width;ctx.fillRect(14*s,H*.06,tw+20*s,26*s*1.2);ctx.fillStyle="#e3e9ec";ctx.fillText(hud,24*s,H*.06+20*s*1.1);
+  ctx.fillStyle="#e8584a";ctx.beginPath();ctx.arc(W-22*s,H*.06+14*s,5*s,0,7);ctx.globalAlpha=(Math.sin(t*4)+1)/2;ctx.fill();ctx.globalAlpha=1;
+  $(".prog i",V.el).style.width=(p*100).toFixed(1)+"%";
+  $(".ts",V.el).textContent=`0:${String(Math.floor(t)).padStart(2,"0")} / 0:${dur}`;
+}
+
+/* ================= CHATBOT ================= */
+const FAQ=[
+ [["price","cost","rate","kitna","charge","charges","quote"],()=>`Starting prices: Foam wash ${inr(svcById("foam-wash").from)}, Interior ${inr(svcById("interior").from)}, Ceramic ${inr(svcById("ceramic").from)}, PPF ${inr(svcById("ppf").from)}. Exact price depends on the car. Want a quote? <a href="#" data-chat-enq>Fill a quick form</a>.`],
+ [["time","timing","open","hours","sunday","close"],()=>`We're open ${BRANCHES[0].hours} at our ${BRANCHES[0].area} studio. Other branches have their own timings on the <a href="#branches">Branches page</a>.`],
+ [["ceramic","coating","graphene"],()=>"Ceramic coating takes about 2 days and lasts up to 5 years. Graphene goes up to 7 years with better heat resistance. Keep the car dry for 24 hours after."],
+ [["ppf","film","scratch","chip"],()=>"PPF is a clear 190 µm film that stops stone chips and scratches, and self-heals fine marks. Full body takes 3–4 days, with up to 10 years warranty."],
+ [["branch","location","address","where","near","kirti","dwarka","rajouri"],()=>`We have ${BRANCHES.length} studios: ${BRANCHES.map(b=>b.area).join(", ")}. <a href="#branches">See addresses and directions</a>.`],
+ [["book","appointment","slot","booking"],()=>`Sure! <a href="#" data-chat-enq>Book here</a> or message us on WhatsApp. Usually we have slots within 1–2 days.`],
+ [["pickup","pick","drop","home","flatbed"],()=>"Yes, free pick-up and drop within 8 km of any branch by our own trained drivers. Supercars travel on an enclosed flatbed."],
+ [["warranty","guarantee"],()=>"Coatings come with 2–7 years warranty, PPF up to 10 years, paint jobs 1 year. You get a written warranty card."],
+ [["interior","seat","smell","ac"],()=>"Interior deep cleaning takes 5–6 hours: steam cleaning, leather care and odour treatment. Starts at "+inr(svcById("interior").from)+"."],
+ [["dent","paint","insurance","accident"],()=>"We do denting and painting from "+inr(svcById("dent-paint").from)+" per panel, with cashless insurance claims handled for you."],
+ [["hi","hello","hey","namaste"],()=>"Hi! Ask me about prices, services, timings or branches."]
+];
+let chatOpen=false, chatLog=[];
+function botReply(q){const l=q.toLowerCase();for(const [k,a] of FAQ){if(k.some(w=>l.includes(w)))return a()}return `I'm not sure about that one. Our team can answer on <a target="_blank" rel="noopener" href="${waLink("Hi, I have a question: "+q)}">WhatsApp</a> within minutes.`}
+function toggleChat(){
+  chatOpen=!chatOpen; const m=$("#chatMount");
+  if(!chatOpen){m.innerHTML="";return}
+  $(".ping")?.remove();
+  if(!chatLog.length) chatLog.push(["bot",`Hi! I'm the ${esc(BRAND.name)} assistant. How can I help with your car today?`]);
+  m.innerHTML=`<div class="chat" role="dialog" aria-label="Chat assistant"><div class="chat-h"><span class="avatar" style="background:var(--accent);color:var(--accent-ink)">${markSVG(22)}</span><div><b>${esc(BRAND.name)} Assistant</b><small>● Online</small></div><button aria-label="Close chat" id="chatX">×</button></div>
+  <div class="chat-b" id="chatB"></div><div class="quick">${["Prices","Timings","Ceramic coating","Branches","Book appointment"].map(q=>`<button>${q}</button>`).join("")}</div>
+  <form class="chat-f" id="chatF"><input id="chatI" placeholder="Type your question…" autocomplete="off"><button>Send</button></form></div>`;
+  paintChat();
+  $("#chatX").onclick=toggleChat;
+  $$(".quick button").forEach(b=>b.onclick=()=>ask(b.textContent));
+  $("#chatF").onsubmit=e=>{e.preventDefault();const v=$("#chatI").value.trim();if(v){ask(v);$("#chatI").value=""}};
+  $("#chatI").focus({preventScroll:true});
+}
+function paintChat(){const b=$("#chatB");if(!b)return;b.innerHTML=chatLog.map(([w,t])=>`<div class="msg ${w}">${w==="me"?esc(t):t}</div>`).join("");b.scrollTop=b.scrollHeight}
+function ask(q){chatLog.push(["me",q]);chatLog.push(["bot",`<span class="typing"><span></span><span></span><span></span></span>`]);paintChat();setTimeout(()=>{chatLog[chatLog.length-1]=["bot",botReply(q)];paintChat()},700)}
+
+/* ================= DEMO CUSTOMIZER ================= */
+function openDemo(){
+  const sw=["#D4A537","#E2584A","#4FB3E8","#7BD389","#C59BFF"];
+  $("#modalMount").innerHTML=`<div class="modal" id="dm" role="dialog" aria-modal="true" aria-labelledby="dmT"><div class="mbox"><button class="mx" id="dmx" aria-label="Close">×</button>
+  <div class="mtop"><span class="eyebrow">For your sales demo</span><h3 id="dmT">Rebrand this site for a shop</h3><p>Type the shop's details and the whole website updates. Enquiries will then go to their WhatsApp and Gmail.</p></div>
+  <form class="mbody form" id="dmF">
+   <div class="row2"><label class="f">Brand name<input id="dm-name" value="${esc(BRAND.name)}"></label><label class="f">City<input id="dm-city" value="${esc(BRAND.city)}"></label></div>
+   <label class="f">Tagline<input id="dm-tag" value="${esc(BRAND.tagline)}"></label>
+   <div class="row2"><label class="f">Phone (shown)<input id="dm-phone" value="${esc(BRAND.phone)}"></label><label class="f">WhatsApp (digits, with 91)<input id="dm-wa" value="${esc(BRAND.whatsapp)}" inputmode="numeric"></label></div>
+   <label class="f">Gmail for enquiries<input id="dm-email" value="${esc(BRAND.email)}"></label>
+   <label class="f">Accent colour<div class="chips" id="dmSw">${sw.map(c=>`<button type="button" class="chip${c===BRAND.accent?" on":""}" data-c="${c}" style="display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:50%;background:${c};display:inline-block"></i>${c}</button>`).join("")}</div></label>
+   <div class="cta-row"><button class="btn primary" type="submit">Apply to website</button><button class="btn ghost" type="button" id="dmReset">Reset to default</button></div></form></div></div>`;
+  let acc=BRAND.accent;
+  const close=()=>{$("#modalMount").innerHTML=""};
+  $("#dmx").onclick=close; $("#dm").addEventListener("click",e=>{if(e.target.id==="dm")close()});
+  $$("#dmSw [data-c]").forEach(b=>b.onclick=()=>{acc=b.dataset.c;$$("#dmSw .chip").forEach(x=>x.classList.toggle("on",x===b))});
+  $("#dmReset").onclick=()=>{BRAND=Object.assign({},DEFAULT_BRAND);try{localStorage.removeItem("demoBrand")}catch(e){}close();rerender();toast("Reset to default brand")};
+  $("#dmF").onsubmit=e=>{e.preventDefault();
+    BRAND=Object.assign({},BRAND,{name:$("#dm-name").value.trim()||DEFAULT_BRAND.name,city:$("#dm-city").value.trim()||"Delhi",tagline:$("#dm-tag").value.trim(),phone:$("#dm-phone").value.trim(),whatsapp:$("#dm-wa").value.replace(/\D/g,""),email:$("#dm-email").value.trim(),accent:acc});
+    try{localStorage.setItem("demoBrand",JSON.stringify(BRAND))}catch(e){}
+    close();rerender();toast("Website updated for "+BRAND.name);
+  };
+}
+function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+
+/* ================= HERO (background video / animated studio) ================= */
+let heroRAF=0, heroResize=null;
+function hexA(h,a){h=String(h).trim().replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");const n=parseInt(h,16)||0;return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`}
+function heroBlock(){
+  const words="Showroom shine, every single time.".split(" ");
+  return `<section class="hero" id="hero">
+   <div class="hero-media">${HERO_VIDEO?`<video poster="${HERO_POSTER}" muted loop playsinline preload="auto">${vidSources(HERO_SRC)}</video>`:`<canvas id="heroCv" aria-hidden="true"></canvas>`}</div>
+   <div class="hero-shade"></div>
+   <div class="wrap hero-in" id="heroIn">
+     <div class="hero-mark">${markSVG(96)}</div>
+     <span class="tag">${esc(BRAND.tagline)}</span>
+     <h1 class="hero-name">${esc(BRAND.name)}</h1>
+     <p class="hero-line">${words.map((w,i)=>`<span class="w"><span style="--i:${i}">${w}</span></span>`).join(" ")}</p>
+     <p class="hero-p">${esc(BRAND.intro)}</p>
+     <div class="cta-row hero-cta"><button class="btn primary" data-enquire>Book a service</button><a class="btn ghost" href="#vids" data-jump="vids">${ICON.play} Watch how we work</a></div>
+   </div>
+   <div class="hero-scroll" aria-hidden="true"><span></span>Scroll</div>
+   ${HERO_VIDEO?"":`<span class="photo-tag">BACKGROUND VIDEO SLOT</span>`}
+  </section>
+  <div class="marquee" aria-hidden="true"><div class="mq">${SERVICES.map(s=>`<span>${s.name}</span><i>◆</i>`).join("").repeat(2)}</div></div>`;
+}
+function initHero(){
+  const hero=$("#hero"); if(!hero) return;
+  const inn=$("#heroIn"), hp={x:0,y:0};
+  if(matchMedia("(hover:hover)").matches){
+    hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect();hp.x=(e.clientX-r.left)/r.width-.5;hp.y=(e.clientY-r.top)/r.height-.5;inn.style.setProperty("--hy",(hp.x*10).toFixed(2)+"deg");inn.style.setProperty("--hx",(-hp.y*7).toFixed(2)+"deg")});
+    hero.addEventListener("pointerleave",()=>{hp.x=hp.y=0;inn.style.setProperty("--hy","0deg");inn.style.setProperty("--hx","0deg")});
+  }
+  const hv=$(".hero-media video");
+  if(hv) new IntersectionObserver(es=>{if(es[0].isIntersecting&&!document.body.classList.contains("intro-on"))hv.play().catch(()=>{});else hv.pause()},{threshold:.05}).observe(hero);
+  const cv=$("#heroCv"); if(!cv) return;
+  const ctx=cv.getContext("2d"), reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const R=rng(42), dust=Array.from({length:80},()=>({x:R(),y:R(),z:R(),s:R()}));
+  const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#D4A537";
+  let W=0,H=0,d=1,vis=true,tx=0,ty=0;
+  const size=()=>{d=Math.min(2,window.devicePixelRatio||1);W=cv.clientWidth||800;H=cv.clientHeight||600;cv.width=W*d;cv.height=H*d;if(reduce)drawHero(ctx,W,H,d,4,0,0,dust,accent)};
+  heroResize=size; size();
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(hero);
+  if(reduce) return;
+  const t0=performance.now();
+  const frame=now=>{heroRAF=requestAnimationFrame(frame);if(!vis||document.hidden)return;tx+=(hp.x-tx)*.05;ty+=(hp.y-ty)*.05;drawHero(ctx,W,H,d,(now-t0)/1000,tx,ty,dust,accent)};
+  heroRAF=requestAnimationFrame(frame);
+}
+function carShape(ctx,t,accent,refl){
+  const pg=ctx.createLinearGradient(0,200,0,360);pg.addColorStop(0,"#4a525a");pg.addColorStop(.42,"#15191d");pg.addColorStop(1,"#040506");
+  ctx.fillStyle=pg;ctx.fill(carPath);
+  if(!refl){
+    ctx.save();ctx.clip(carPath);
+    const lx=-300+((t*.14)%1)*1500;
+    const sg=ctx.createLinearGradient(lx-160,0,lx+70,0);sg.addColorStop(0,hexA(accent,0));sg.addColorStop(.55,hexA(accent,.6));sg.addColorStop(.72,"rgba(255,246,214,.8)");sg.addColorStop(1,hexA(accent,0));
+    ctx.fillStyle=sg;ctx.beginPath();ctx.moveTo(lx,185);ctx.lineTo(lx+70,185);ctx.lineTo(lx-90,385);ctx.lineTo(lx-160,385);ctx.fill();
+    ctx.strokeStyle=hexA(accent,.85);ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(60,292);ctx.quadraticCurveTo(420,262,760,296);ctx.stroke();
+    ctx.strokeStyle="rgba(255,255,255,.22)";ctx.lineWidth=1.2;
+    for(let i=0;i<9;i++){const x=290+i*48-((t*36)%48),y=211;ctx.beginPath();for(let v=0;v<6;v++){const a=Math.PI/3*v;ctx[v?"lineTo":"moveTo"](x+9*Math.cos(a),y+4*Math.sin(a))}ctx.closePath();ctx.stroke()}
+    ctx.restore();
+  }
+  ctx.fillStyle="#060a0e";ctx.fill(w1);ctx.fill(w2);
+  if(!refl){ctx.strokeStyle="rgba(190,215,235,.25)";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(312,272);ctx.lineTo(350,234);ctx.moveTo(500,270);ctx.lineTo(528,234);ctx.stroke()}
+  ctx.fillStyle="#fff6dc";ctx.beginPath();ctx.moveTo(722,296);ctx.lineTo(746,304);ctx.lineTo(746,318);ctx.lineTo(716,312);ctx.fill();
+  ctx.fillStyle="#d23b2f";ctx.beginPath();ctx.moveTo(84,312);ctx.lineTo(102,308);ctx.lineTo(100,326);ctx.lineTo(82,328);ctx.fill();
+  [245,635].forEach(cx=>{ctx.fillStyle="#050709";ctx.beginPath();ctx.arc(cx,360,46,0,7);ctx.fill();ctx.fillStyle="#22292f";ctx.beginPath();ctx.arc(cx,360,31,0,7);ctx.fill();ctx.strokeStyle=hexA(accent,.9);ctx.lineWidth=2.5;ctx.stroke();ctx.strokeStyle="#b9c3ca";ctx.lineWidth=5;ctx.lineCap="round";for(let k=0;k<5;k++){const a=k*1.2566+t*5;ctx.beginPath();ctx.moveTo(cx,360);ctx.lineTo(cx+27*Math.cos(a),360+27*Math.sin(a));ctx.stroke()}ctx.fillStyle=accent;ctx.beginPath();ctx.arc(cx,360,7,0,7);ctx.fill()});
+}
+function drawHero(ctx,W,H,d,t,px,py,dust,accent){
+  ctx.setTransform(d,0,0,d,0,0);ctx.globalAlpha=1;
+  const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,"#0a1015");bg.addColorStop(.5,"#121c24");bg.addColorStop(1,"#05080a");
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  const f=Math.max(W,H)*.55, cx=W/2-px*60, hz=H*.42-py*30;
+  const hg=ctx.createRadialGradient(cx,hz,0,cx,hz,W*.6);hg.addColorStop(0,hexA(accent,.2));hg.addColorStop(1,hexA(accent,0));ctx.fillStyle=hg;ctx.fillRect(0,0,W,H);
+  // hexagon light ceiling moving toward the camera (3D perspective)
+  const r=.5, xs=Math.sqrt(3)*r*1.12, zs=1.5*r*1.12, off=(t*.8)%(zs*2);
+  const plane=(Y,k0)=>{
+    for(let k=26;k>=0;k--){
+      const zc=k*zs-off+.3; if(zc<1.1) continue;
+      const rowY=hz+Y*f/zc; if(rowY<-f*.6||rowY>H+f*.6) continue;
+      const fade=Math.max(0,1-zc/19)*k0, lw=Math.min(5,Math.max(.6,f/zc*.008));
+      for(let i=-14;i<=14;i++){
+        const xc=i*xs+(k%2?xs/2:0); if(Math.abs(xc*f/zc)>W*.85) continue;
+        ctx.beginPath();
+        for(let v=0;v<6;v++){const a=Math.PI/3*v+Math.PI/6,X=xc+r*Math.cos(a),Z=zc+r*Math.sin(a),sx=cx+X*f/Z,sy=hz+Y*f/Z;v?ctx.lineTo(sx,sy):ctx.moveTo(sx,sy)}
+        ctx.closePath();
+        ctx.lineWidth=lw*3;ctx.strokeStyle=`rgba(220,236,248,${(fade*.12).toFixed(3)})`;ctx.stroke();
+        ctx.lineWidth=lw;ctx.strokeStyle=`rgba(242,248,252,${(fade*.85).toFixed(3)})`;ctx.stroke();
+      }
+    }
+  };
+  plane(-1.5,1);
+  const fl=ctx.createLinearGradient(0,hz,0,H);fl.addColorStop(0,"rgba(8,12,15,0)");fl.addColorStop(.2,"rgba(8,12,15,.75)");fl.addColorStop(1,"#05080a");ctx.fillStyle=fl;ctx.fillRect(0,hz,W,H-hz);
+  plane(4.2,.13);
+  // car on glossy floor
+  const carZ=4.2, sc=(4.6*f/carZ)/674*(1+.015*Math.sin(t*.4)), base=Math.max(hz+f/carZ,H*.8), ox=cx-413*sc;
+  ctx.save();ctx.translate(ox,base);ctx.scale(sc,sc);
+  const shg=ctx.createRadialGradient(413,0,10,413,0,420);shg.addColorStop(0,"rgba(0,0,0,.85)");shg.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.save();ctx.scale(1,.08);ctx.fillStyle=shg;ctx.beginPath();ctx.arc(413,0,420,0,7);ctx.fill();ctx.restore();
+  ctx.save();ctx.scale(1,-1);ctx.translate(0,-406);ctx.globalAlpha=.16;carShape(ctx,t,accent,true);ctx.restore();
+  ctx.translate(0,-406);carShape(ctx,t,accent,false);
+  ctx.restore();
+  const rf=ctx.createLinearGradient(0,base,0,base+220*sc);rf.addColorStop(0,"rgba(5,8,10,0)");rf.addColorStop(1,"rgba(5,8,10,.95)");ctx.fillStyle=rf;ctx.fillRect(0,base,W,220*sc+2);
+  // dust + headlight flare
+  ctx.globalCompositeOperation="lighter";
+  dust.forEach((p,i)=>{const y=(((p.y-t*.015*(.4+p.s))%1)+1)%1*H, x=p.x*W+Math.sin(t*.4+p.z*9)*24-px*40*p.z, s=.6+p.z*2.4, a=(.1+.4*p.z)*(.6+.4*Math.sin(t*2+i));ctx.fillStyle=hexA(accent,a.toFixed(3));ctx.beginPath();ctx.arc(x,y,s,0,7);ctx.fill()});
+  const hx=ox+735*sc, hy=base-98*sc, fr=180*sc, fa=.32+.12*Math.sin(t*1.6);
+  const fg=ctx.createRadialGradient(hx,hy,0,hx,hy,fr);fg.addColorStop(0,`rgba(255,247,220,${fa.toFixed(3)})`);fg.addColorStop(1,"rgba(255,247,220,0)");ctx.fillStyle=fg;ctx.fillRect(hx-fr,hy-fr,fr*2,fr*2);
+  ctx.globalCompositeOperation="source-over";
+}
+
+/* ================= OPENING INTRO: car drift ================= */
+function playIntro(done){
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches){done();return}
+  document.body.classList.add("intro-on");
+  const ov=document.createElement("div");ov.className="intro-ov";ov.setAttribute("aria-label","Opening animation");
+  ov.innerHTML=`<canvas aria-hidden="true"></canvas><div class="intro-brand"><div class="ib-mark">${markSVG(76)}</div><div class="ib-name">${esc(BRAND.name)}</div><div class="ib-tag">${esc(BRAND.tagline)}</div></div><div class="intro-hud"><span>Warming up</span><i><b></b></i><span class="pc">0%</span></div><button class="intro-skip" type="button">Skip intro ›</button>`;
+  document.body.appendChild(ov);
+  const cv=$("canvas",ov), ctx=cv.getContext("2d"), brand=$(".intro-brand",ov), pc=$(".pc",ov), bar=$(".intro-hud b",ov);
+  const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#D4A537";
+  const rr=(c,x,y,w,h,r)=>{c.beginPath();if(c.roundRect)c.roundRect(x,y,w,h,r);else c.rect(x,y,w,h)};
+  let W,H,d,cx,cy,R,S,CL,CW,trail,tctx,floor;
+  const setup=()=>{
+    d=Math.min(1.5,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx=W/2;cy=H/2;
+    R=Math.min(W,H)*.33;S=Math.max(.5,Math.min(1.15,Math.min(W,H)/760));CL=120*S;CW=56*S;
+    trail=document.createElement("canvas");trail.width=W*d;trail.height=H*d;tctx=trail.getContext("2d");tctx.setTransform(d,0,0,d,0,0);tctx.lineCap="round";
+    floor=document.createElement("canvas");floor.width=W*d;floor.height=H*d;const c=floor.getContext("2d");c.setTransform(d,0,0,d,0,0);
+    const g=c.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*.75);g.addColorStop(0,"#161e25");g.addColorStop(1,"#040607");c.fillStyle=g;c.fillRect(0,0,W,H);
+    const r=rng(9);for(let i=0;i<W*H/700;i++){c.fillStyle=`rgba(255,255,255,${(r()*.04).toFixed(3)})`;c.fillRect(r()*W,r()*H,1.3,1.3)}
+    c.strokeStyle="rgba(230,240,248,.055)";c.lineWidth=2;const hr=48*S;
+    for(let row=0;row*hr*1.5<H+hr;row++)for(let col=0;col*hr*1.74<W+hr;col++){const x=col*hr*1.74+(row%2?hr*.87:0),y=row*hr*1.5;c.beginPath();for(let v=0;v<6;v++){const a=Math.PI/3*v+Math.PI/6;c[v?"lineTo":"moveTo"](x+hr*.82*Math.cos(a),y+hr*.82*Math.sin(a))}c.closePath();c.stroke()}
+  };
+  setup();
+  const tA0=.4,tA1=1.05,tB1=3.25,tC1=4.05,TEND=4.6,TH=2.2*Math.PI,DR=.85;
+  const pose=t=>{
+    const P0=[cx-R*1.7,H+170*S],C=[cx-R*1.2,cy+R*1.25],P1=[cx-R,cy];
+    if(t<tA1){const k=Math.max(0,(t-tA0)/(tA1-tA0)),m=1-k;
+      const x=m*m*P0[0]+2*m*k*C[0]+k*k*P1[0],y=m*m*P0[1]+2*m*k*C[1]+k*k*P1[1];
+      const tx=2*m*(C[0]-P0[0])+2*k*(P1[0]-C[0]),ty=2*m*(C[1]-P0[1])+2*k*(P1[1]-C[1]);
+      const dr=Math.max(0,(k-.5)/.5)*DR;
+      return {x,y,h:Math.atan2(ty,tx)+dr,drift:dr/DR,steer:-dr*.5,u:0};
+    }
+    if(t<tB1){const th=Math.PI+TH*(t-tA1)/(tB1-tA1);return {x:cx+R*Math.cos(th),y:cy+R*Math.sin(th),h:th+Math.PI/2+DR,drift:1,steer:-.45,u:0}}
+    const u=Math.min(1.5,(t-tB1)/(tC1-tB1)),the=Math.PI+TH,te=the+Math.PI/2,sp=R*TH/(tB1-tA1)*(tC1-tB1);
+    const dist=sp*u+Math.max(W,H)*1.6*u*u,dr=DR*Math.max(0,1-u*2.2);
+    return {x:cx+R*Math.cos(the)+Math.cos(te)*dist,y:cy+R*Math.sin(the)+Math.sin(te)*dist,h:te+dr,drift:dr/DR,steer:dr*.4,u};
+  };
+  const rear=P=>{const c=Math.cos(P.h),s=Math.sin(P.h),lx=-CL*.3;return [-1,1].map(sd=>{const ly=sd*CW*.46;return [P.x+lx*c-ly*s,P.y+lx*s+ly*c]})};
+  const drawCar=(P)=>{
+    ctx.save();ctx.translate(P.x,P.y);ctx.rotate(P.h);const L=CL,w=CW;
+    ctx.globalCompositeOperation="lighter";
+    const bg=ctx.createRadialGradient(L*.5,0,0,L*.5,0,L*2.4);bg.addColorStop(0,"rgba(255,244,210,.5)");bg.addColorStop(1,"rgba(255,244,210,0)");
+    ctx.fillStyle=bg;ctx.beginPath();ctx.moveTo(L*.48,-w*.36);ctx.lineTo(L*2.8,-w*1.7);ctx.lineTo(L*2.8,w*1.7);ctx.lineTo(L*.48,w*.36);ctx.fill();
+    const tg=ctx.createRadialGradient(-L*.5,0,0,-L*.5,0,L*.75);tg.addColorStop(0,"rgba(255,40,30,.5)");tg.addColorStop(1,"rgba(255,40,30,0)");ctx.fillStyle=tg;ctx.fillRect(-L*1.25,-L*.75,L*1.5,L*1.5);
+    ctx.globalCompositeOperation="source-over";
+    ctx.fillStyle="rgba(0,0,0,.6)";rr(ctx,-L*.52+5*S,-w*.5+7*S,L*1.04,w,w*.3);ctx.fill();
+    ctx.fillStyle="#0a0a0a";const wl=L*.2,ww=w*.2;
+    [[L*.3,P.steer],[-L*.3,0]].forEach(([ax,st])=>[-1,1].forEach(sd=>{ctx.save();ctx.translate(ax,sd*w*.44);ctx.rotate(st);ctx.fillRect(-wl/2,-ww/2,wl,ww);ctx.restore()}));
+    const g=ctx.createLinearGradient(0,-w/2,0,w/2);g.addColorStop(0,"#3a4148");g.addColorStop(.5,"#0c0f12");g.addColorStop(1,"#3a4148");
+    ctx.fillStyle=g;rr(ctx,-L/2,-w*.44,L,w*.88,w*.32);ctx.fill();
+    ctx.fillStyle="#04070a";rr(ctx,-L*.22,-w*.34,L*.46,w*.68,w*.18);ctx.fill();
+    const rg=ctx.createLinearGradient(-L*.12,0,L*.16,0);rg.addColorStop(0,"#1b2025");rg.addColorStop(1,"#353c42");ctx.fillStyle=rg;rr(ctx,-L*.13,-w*.3,L*.27,w*.6,w*.12);ctx.fill();
+    ctx.fillStyle=accent;ctx.fillRect(-L*.49,-w*.1,L*.98,w*.06);ctx.fillRect(-L*.49,w*.04,L*.98,w*.06);
+    ctx.fillStyle="#fff6dc";rr(ctx,L*.43,-w*.4,L*.06,w*.17,3);ctx.fill();rr(ctx,L*.43,w*.23,L*.06,w*.17,3);ctx.fill();
+    ctx.fillStyle="#ff3b2e";rr(ctx,-L*.5,-w*.4,L*.04,w*.2,2);ctx.fill();rr(ctx,-L*.5,w*.2,L*.04,w*.2,2);ctx.fill();
+    ctx.strokeStyle=hexA(accent,.55);ctx.lineWidth=1.4;rr(ctx,-L/2,-w*.44,L,w*.88,w*.32);ctx.stroke();
+    ctx.restore();
+  };
+  const smoke=[], R2=rng(77);
+  let prevW=null,raf=0,finished=false,shown=false;
+  const finish=()=>{if(finished)return;finished=true;ov.classList.add("out");document.body.classList.remove("intro-on");const hv=$(".hero-media video");if(hv&&scrollY<innerHeight)hv.play().catch(()=>{});setTimeout(()=>{cancelAnimationFrame(raf);removeEventListener("resize",setup);ov.remove();done()},950)};
+  $(".intro-skip",ov).onclick=finish;
+  addEventListener("resize",setup);
+  const t0=performance.now();let last=t0;
+  const frame=now=>{
+    raf=requestAnimationFrame(frame);
+    const t=(now-t0)/1000,dt=Math.min(.05,(now-last)/1000);last=now;
+    const P=pose(t),rw=rear(P),live=t>=tA0;
+    if(live&&prevW&&P.drift>.12){
+      const k=Math.min(1,P.drift/.4);tctx.strokeStyle="#3b2f12";tctx.lineWidth=20*S*k;rw.forEach((p,i)=>{tctx.beginPath();tctx.moveTo(prevW[i][0],prevW[i][1]);tctx.lineTo(p[0],p[1]);tctx.stroke()});tctx.strokeStyle=accent;tctx.lineWidth=7*S*k;
+      rw.forEach((p,i)=>{tctx.beginPath();tctx.moveTo(prevW[i][0],prevW[i][1]);tctx.lineTo(p[0],p[1]);tctx.stroke()});
+      tctx.strokeStyle="#FFF2CD";tctx.lineWidth=1.6*S;
+      rw.forEach((p,i)=>{tctx.beginPath();tctx.moveTo(prevW[i][0],prevW[i][1]);tctx.lineTo(p[0],p[1]);tctx.stroke()});
+      if(P.drift>.3&&smoke.length<160)rw.forEach(p=>{for(let k=0;k<1;k++){const ox=p[0]-cx,oy=p[1]-cy,n=Math.hypot(ox,oy)||1;smoke.push({x:p[0],y:p[1],vx:ox/n*30*S+(R2()-.5)*40*S,vy:oy/n*30*S+(R2()-.5)*40*S,r:6*S,b:t,life:1.2+R2()*.9})}});
+    }
+    prevW=live?rw:null;
+    ctx.setTransform(d,0,0,d,0,0);
+    const shake=(t>tA1&&t<tB1)?1.8*S:0;ctx.translate((R2()-.5)*shake,(R2()-.5)*shake);
+    ctx.drawImage(floor,0,0,W,H);ctx.globalAlpha=.75;ctx.drawImage(trail,0,0,W,H);ctx.globalAlpha=1;
+    if(t>3.3&&t<4.7){const k=(t-3.3)/1.4;ctx.strokeStyle=hexA(accent,(.55*(1-k)).toFixed(3));ctx.lineWidth=3*S*(1-k)+1;ctx.beginPath();ctx.arc(cx,cy,R+k*Math.max(W,H)*.9,0,7);ctx.stroke()}
+    if(live){if(P.u>0)for(let g=3;g>=1;g--){ctx.globalAlpha=.1*(4-g)*Math.min(1,P.u*2);drawCar(pose(t-g*.028))}ctx.globalAlpha=1;drawCar(P)}
+    for(let i=smoke.length-1;i>=0;i--){const s=smoke[i],age=t-s.b;if(age>s.life){smoke.splice(i,1);continue}s.x+=s.vx*dt;s.y+=s.vy*dt;s.vx*=.97;s.vy*=.97;s.r+=34*S*dt;const a=.14*Math.pow(1-age/s.life,1.4);ctx.fillStyle=`rgba(205,212,218,${a.toFixed(3)})`;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,7);ctx.fill()}
+    const p=Math.min(1,t/TEND);bar.style.width=(p*100).toFixed(1)+"%";pc.textContent=Math.round(p*100)+"%";
+    if(t>3.05&&!shown){shown=true;brand.classList.add("show")}
+    if(t>=TEND+.9)finish();
+  };
+  raf=requestAnimationFrame(frame);
+}
+
+/* ================= ROUTER & INTERACTIONS ================= */
+let slideTimer=null;
+function route(){
+  const h=(location.hash||"#home").slice(1);
+  let html;
+  if(h.startsWith("service-")) html=pageService(h.slice(8));
+  else if(h.startsWith("branch-")) html=pageBranch(h.slice(7));
+  else if(h.startsWith("post-")) html=pagePost(h.slice(5));
+  else html=({home:pageHome,services:pageServices,branches:pageBranches,about:pageAbout,contact:pageContact,blog:pageBlog,"faq-all":pageFaq}[h]||pageHome)();
+  VIDS.length=0; clearInterval(slideTimer); cancelAnimationFrame(heroRAF); heroResize=null;
+  const app=$("#app"); app.innerHTML=html; app.classList.remove("enter"); void app.offsetWidth; app.classList.add("enter");
+  const top=h.split("-")[0], key={service:"services",branch:"branches",post:"blog"}[top]||top;
+  $$(".nav ul a").forEach(a=>a.classList.toggle("on",a.dataset.r===key));
+  $("#drawer").classList.remove("open"); $("#burger").setAttribute("aria-expanded","false");
+  window.scrollTo({top:0,behavior:"instant"});
+  wire();
+}
+function rerender(){renderChrome();const y=scrollY;route();window.scrollTo(0,y)}
+function wire(){
+  initHero(); initVideos(); initFleet();
+  // slideshow
+  const sl=$("#slides");
+  if(sl){let i=0;const items=$$(".sl",sl),dots=$$(".dots button",sl);const go=n=>{i=n;items.forEach((x,k)=>x.classList.toggle("on",k===i));dots.forEach((x,k)=>x.classList.toggle("on",k===i));$("#slideCap").textContent=dots[i].dataset.cap};
+    dots.forEach((d,k)=>d.onclick=()=>{go(k);clearInterval(slideTimer);slideTimer=setInterval(()=>go((i+1)%items.length),4500)});
+    slideTimer=setInterval(()=>go((i+1)%items.length),4500)}
+  // category filter
+  const chips=$("#catChips");
+  if(chips) $$(".chip",chips).forEach(c=>c.onclick=()=>{$$(".chip",chips).forEach(x=>x.classList.toggle("on",x===c));$$("#allSvc .svc").forEach((card,k)=>{card.hidden=!(c.dataset.cat==="All"||SERVICES[k].cat===c.dataset.cat)})});
+  const fc=$("#faqChips");
+  if(fc) $$(".chip",fc).forEach(c=>c.onclick=()=>{$$(".chip",fc).forEach(x=>x.classList.toggle("on",x===c));$$("#faqList details").forEach(dt=>{dt.hidden=!(c.dataset.cat==="All"||dt.dataset.cat===c.dataset.cat)})});
+  // before/after
+  $$(".ba").forEach(b=>{const r=$("input",b);r.oninput=()=>b.style.setProperty("--p",r.value+"%")});
+  // tilt on hover devices
+  if(matchMedia("(hover:hover)").matches&&!matchMedia("(prefers-reduced-motion:reduce)").matches){
+    $$("[data-tilt]").forEach(c=>{c.addEventListener("pointermove",e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.setProperty("--mx",x*100+"%");c.style.setProperty("--my",y*100+"%");const A=+(c.dataset.tilt||13);c.style.setProperty("--ry",((x-.5)*A).toFixed(2)+"deg");c.style.setProperty("--rx",((.5-y)*A).toFixed(2)+"deg")});
+      c.addEventListener("pointerleave",()=>{c.style.setProperty("--rx","0deg");c.style.setProperty("--ry","0deg")})})}
+  // reveal + counters
+  const vh=innerHeight;
+  $$(".grid-svc,.posts,.contact-grid,.incl,.values,.vids,.materials,.pk,.branches,.facts").forEach(g=>[...g.children].filter(c=>c.classList.contains("rv")).forEach((c,i)=>{c.style.transitionDelay=(i%4)*110+"ms"}));
+  const settle=el=>setTimeout(()=>{el.classList.remove("rv");el.style.transitionDelay=""},1400);
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove("pending");io.unobserve(e.target);settle(e.target)}}),{threshold:.12});
+  $$(".rv").forEach(el=>{if(el.getBoundingClientRect().top>vh*.92){el.classList.add("pending");io.observe(el)}else{el.style.transitionDelay="";el.classList.remove("rv")}});
+  const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;co.unobserve(e.target);const end=+e.target.dataset.count,t0=performance.now();const step=n=>{const k=Math.min(1,(n-t0)/1400);e.target.textContent=Math.round(end*(1-Math.pow(1-k,3))).toLocaleString("en-IN")+(end>=1000?"+":"");if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}),{threshold:.5});
+  $$("[data-count]").forEach(el=>co.observe(el));
+}
+document.addEventListener("click",e=>{
+  const en=e.target.closest("[data-enquire]"); if(en){e.preventDefault();openEnquiry(en.dataset.enquire||"");return}
+  const oc=e.target.closest("[data-openchat]"); if(oc){if(!chatOpen)toggleChat();return}
+  const jp=e.target.closest("[data-jump]"); if(jp){e.preventDefault();document.getElementById(jp.dataset.jump)?.scrollIntoView({behavior:"smooth"});return}
+  const ce=e.target.closest("[data-chat-enq]"); if(ce){e.preventDefault();toggleChat();openEnquiry();return}
+  const cp=e.target.closest("[data-copy]"); if(cp){const t=cp.dataset.copy;navigator.clipboard?.writeText(t).then(()=>toast("Copied"),()=>toast("Select and copy: "+t.slice(0,40)));return}
+});
+document.addEventListener("submit",e=>{const f=e.target.closest("[data-enq]");if(f){e.preventDefault();handleEnquiry(f)}});
+$("#burger").onclick=()=>{const d=$("#drawer"),o=!d.classList.contains("open");d.classList.toggle("open",o);$("#burger").setAttribute("aria-expanded",String(o))};
+$("#fabChat").onclick=toggleChat;
+$("#demoBtn").onclick=openDemo;
+addEventListener("hashchange",route);
+addEventListener("resize",()=>{VIDS.forEach(V=>V.size());heroResize&&heroResize()});
+renderChrome(); route();
+(()=>{
+  const prog=document.createElement("div");prog.className="progress";document.body.appendChild(prog);
+  const hdr=$("header.top");
+  const onScroll=()=>{const h=document.documentElement.scrollHeight-innerHeight;prog.style.transform=`scaleX(${h>0?Math.min(1,scrollY/h):0})`;hdr.classList.toggle("scrolled",scrollY>30);const hi=$("#heroIn");if(hi)hi.style.setProperty("--sy",Math.min(400,scrollY*.35).toFixed(1)+"px")};
+  addEventListener("scroll",onScroll,{passive:true});onScroll();
+  if(matchMedia("(hover:hover)").matches&&!matchMedia("(prefers-reduced-motion:reduce)").matches){
+
+  }
+})();
+playIntro(()=>setTimeout(()=>{ if(!$("#modalMount").innerHTML) openEnquiry(); },700));
+</script>
+
+</body>
+</html>
